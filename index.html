@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mastercraft — documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+  :root {
+    --bg:        #09090c;
+    --bg-1:      #0f0f14;
+    --bg-2:      #141419;
+    --bg-3:      #1c1c24;
+    --border:    #22222e;
+    --border-2:  #2e2e3e;
+    --text:      #c4c4d4;
+    --text-dim:  #72728a;
+    --text-head: #eeeef8;
+    --amber:     #e8913a;
+    --amber-dim: #a05e1e;
+    --amber-glow:#e8913a22;
+    --cyan:      #5dd8ff;
+    --cyan-dim:  #2a8aaa;
+    --green:     #4dd898;
+    --red:       #f0607a;
+    --yellow:    #f0c050;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --sidebar-w: 280px;
+    --content-max: 760px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── Dot grid background ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, #2a2a3a 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Sidebar ── */
+  #sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: var(--bg-1);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  .sidebar-header {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-bottom: 4px;
+  }
+
+  .logo-mark {
+    width: 28px;
+    height: 28px;
+    background: var(--amber);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-mark svg { width: 16px; height: 16px; }
+
+  .logo-text {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-head);
+    letter-spacing: -0.02em;
+  }
+
+  .logo-version {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* Search */
+  .search-wrap {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .search-box {
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    background: var(--bg-2);
+    border: 1px solid var(--border-2);
+    border-radius: 8px;
+    padding: 8px 12px 8px 34px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-box input:focus { border-color: var(--amber-dim); }
+  .search-box input::placeholder { color: var(--text-dim); }
+
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    pointer-events: none;
+  }
+
+  /* Nav */
+  .sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0 24px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-2) transparent;
+  }
+
+  .nav-section {
+    margin-bottom: 4px;
+  }
+
+  .nav-group-label {
+    padding: 12px 24px 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    opacity: 0.7;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 6px 24px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+
+  .nav-link:hover { color: var(--text); background: var(--bg-2); }
+
+  .nav-link.active {
+    color: var(--amber);
+    border-left-color: var(--amber);
+    background: var(--amber-glow);
+  }
+
+  .nav-link.sub {
+    padding-left: 38px;
+    font-size: 12.5px;
+  }
+
+  /* Main content */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Top bar */
+  #topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(9,9,12,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .breadcrumb {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .breadcrumb .sep { opacity: 0.4; }
+  .breadcrumb .current { color: var(--amber); }
+
+  .topbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .version-badge {
+    background: var(--bg-3);
+    border: 1px solid var(--border-2);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* Content area */
+  #content {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 56px 48px 120px;
+  }
+
+  /* Sections */
+  .doc-section {
+    margin-bottom: 80px;
+    padding-top: 8px;
+  }
+
+  /* Hero section */
+  #hero {
+    padding: 64px 48px 80px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  #hero::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--amber-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-family: var(--font-head);
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--text-head);
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+
+  .hero-subtitle {
+    font-size: 17px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    max-width: 580px;
+    margin-bottom: 36px;
+  }
+
+  .hero-cards {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border-2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .hero-card:hover { border-color: var(--amber); background: var(--bg-3); }
+  .hero-card .hc-icon { color: var(--amber); font-size: 15px; }
+  .hero-card .hc-label { font-weight: 500; }
+
+  /* Typography */
+  h1 {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-head);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: var(--font-head);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-head);
+    letter-spacing: -0.02em;
+    margin-top: 48px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  h2 .h-anchor { color: var(--amber); font-size: 14px; opacity: 0; transition: opacity 0.2s; font-family: var(--font-mono); }
+  h2:hover .h-anchor { opacity: 1; }
+
+  h3 {
+    font-family: var(--font-head);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-head);
+    margin-top: 32px;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--amber);
+    letter-spacing: 0.04em;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  p { margin-bottom: 14px; }
+  p:last-child { margin-bottom: 0; }
+
+  strong { color: var(--text-head); font-weight: 500; }
+  em { color: var(--text-dim); font-style: italic; }
+
+  a { color: var(--amber); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Inline code */
+  code:not(pre code) {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    background: var(--bg-3);
+    border: 1px solid var(--border-2);
+    border-radius: 4px;
+    padding: 1px 6px;
+    color: var(--cyan);
+  }
+
+  /* Code blocks */
+  pre {
+    background: var(--bg-1) !important;
+    border: 1px solid var(--border-2);
+    border-radius: 10px;
+    margin: 18px 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .code-header {
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .code-lang {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    opacity: 0.7;
+  }
+
+  .copy-btn {
+    background: none;
+    border: 1px solid var(--border-2);
+    border-radius: 5px;
+    padding: 3px 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .copy-btn:hover { border-color: var(--amber); color: var(--amber); }
+  .copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+  pre code {
+    font-family: var(--font-mono) !important;
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+    display: block;
+    padding: 16px !important;
+    overflow-x: auto;
+    background: transparent !important;
+  }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 18px 0; border-radius: 10px; border: 1px solid var(--border); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  thead {
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border-2);
+  }
+
+  th {
+    padding: 10px 16px;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 500;
+  }
+
+  td {
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-2); }
+
+  td code { font-size: 12px; }
+
+  /* Callouts */
+  .callout {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-size: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    border: 1px solid;
+  }
+
+  .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-title { font-weight: 500; margin-bottom: 4px; }
+
+  .callout.warn {
+    background: #1a160a;
+    border-color: #4a3010;
+    color: #d4a060;
+  }
+
+  .callout.info {
+    background: #0a1420;
+    border-color: #1a3a5a;
+    color: #60a0d4;
+  }
+
+  .callout.danger {
+    background: #1a0a0e;
+    border-color: #4a1020;
+    color: #d46080;
+  }
+
+  .callout.tip {
+    background: #0a1a12;
+    border-color: #1a4a30;
+    color: #60d4a0;
+  }
+
+  /* Field doc blocks */
+  .field-block {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+
+  .field-header {
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .field-name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--cyan);
+  }
+
+  .field-type {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: var(--bg-3);
+    border: 1px solid var(--border-2);
+    border-radius: 4px;
+    padding: 1px 7px;
+    color: var(--text-dim);
+  }
+
+  .field-default {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: #1a180a;
+    border: 1px solid #3a3010;
+    border-radius: 4px;
+    padding: 1px 7px;
+    color: var(--amber);
+    margin-left: auto;
+  }
+
+  .field-body {
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .field-range {
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-dim);
+  }
+
+  /* Steps */
+  .steps { margin: 20px 0; }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .step::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 32px;
+    bottom: -10px;
+    width: 1px;
+    background: var(--border-2);
+  }
+
+  .step:last-child::before { display: none; }
+
+  .step-num {
+    width: 32px;
+    height: 32px;
+    background: var(--bg-2);
+    border: 1px solid var(--amber);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--amber);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-content { flex: 1; padding-top: 4px; }
+  .step-title { font-weight: 500; color: var(--text-head); margin-bottom: 6px; }
+
+  /* Pipeline diagram */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 24px 0;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .pipe-step {
+    background: var(--bg-2);
+    border: 1px solid var(--border-2);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+    white-space: nowrap;
+    transition: border-color 0.2s;
+  }
+
+  .pipe-step:hover { border-color: var(--amber); color: var(--amber); }
+  .pipe-step.disabled { opacity: 0.35; font-style: italic; }
+
+  .pipe-arrow {
+    color: var(--border-2);
+    font-size: 16px;
+    padding: 0 2px;
+    flex-shrink: 0;
+  }
+
+  /* Measurement rows */
+  .meas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 18px 0;
+  }
+
+  .meas-card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    transition: border-color 0.2s;
+  }
+
+  .meas-card:hover { border-color: var(--border-2); }
+
+  .meas-name {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  .meas-value { font-size: 22px; font-family: var(--font-head); font-weight: 700; color: var(--text-head); margin-bottom: 4px; }
+  .meas-desc { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+
+  /* Destination table highlight */
+  .dest-badge {
+    display: inline-block;
+    background: var(--bg-3);
+    border: 1px solid var(--border-2);
+    border-radius: 4px;
+    padding: 1px 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* Lists */
+  ul, ol {
+    padding-left: 20px;
+    margin: 12px 0;
+  }
+
+  li { margin-bottom: 6px; }
+  li::marker { color: var(--amber); }
+
+  /* Section divider */
+  .section-hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 60px 0;
+  }
+
+  /* Scroll progress */
+  #progress {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-w);
+    right: 0;
+    height: 2px;
+    background: var(--border);
+    z-index: 200;
+  }
+
+  #progress-bar {
+    height: 100%;
+    background: var(--amber);
+    width: 0%;
+    transition: width 0.1s;
+  }
+
+  /* Prism overrides */
+  pre[class*="language-"] { background: transparent !important; margin: 0 !important; padding: 0 !important; }
+  code[class*="language-"] { background: transparent !important; }
+  .token.comment { color: #5a5a7a; }
+  .token.string  { color: #98d898; }
+  .token.number  { color: #f0c050; }
+  .token.keyword { color: var(--amber); }
+  .token.operator { color: var(--text-dim); }
+  .token.punctuation { color: #6060a0; }
+  .token.function { color: var(--cyan); }
+  .token.property { color: #c090f0; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    #sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; }
+    #progress { left: 0; }
+    #content { padding: 32px 24px 80px; }
+    #hero { padding: 40px 24px 56px; }
+    .hero-title { font-size: 36px; }
+    .meas-grid { grid-template-columns: 1fr; }
+    #topbar { padding: 0 24px; }
+    .menu-btn { display: flex; }
+  }
+
+  .menu-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--bg-2);
+    border: 1px solid var(--border-2);
+    border-radius: 7px;
+    cursor: pointer;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+
+  /* Search results */
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-1);
+    border: 1px solid var(--border-2);
+    border-radius: 0 0 8px 8px;
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 200;
+    display: none;
+  }
+
+  .search-results.visible { display: block; }
+
+  .search-result {
+    display: block;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+
+  .search-result:hover { background: var(--bg-2); color: var(--amber); }
+  .search-result:last-child { border-bottom: none; }
+  .sr-section { font-size: 10px; color: var(--text-dim); margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress"><div id="progress-bar"></div></div>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <div class="sidebar-header">
+    <a href="#" class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 12 L5 6 L8 10 L11 4 L14 12" stroke="#09090c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">mastercraft</span>
+    </a>
+    <div class="logo-version">v0.1.0 — documentation</div>
+  </div>
+
+  <div class="search-wrap">
+    <div class="search-box" id="search-box">
+      <span class="search-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </span>
+      <input type="text" id="search-input" placeholder="Search docs…" autocomplete="off">
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-group-label">Getting started</div>
+      <a href="#overview"     class="nav-link">Overview</a>
+      <a href="#how-it-works" class="nav-link">How it works</a>
+      <a href="#installation" class="nav-link">Installation</a>
+      <a href="#quick-start"  class="nav-link">Quick start</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-group-label">CLI</div>
+      <a href="#cli-master"   class="nav-link">master</a>
+      <a href="#cli-analyze"  class="nav-link">analyze</a>
+      <a href="#cli-presets"  class="nav-link">presets / preset</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-group-label">Presets</div>
+      <a href="#creating-a-preset"    class="nav-link">Creating a preset</a>
+      <a href="#ref-target"           class="nav-link sub">[target]</a>
+      <a href="#ref-filters"          class="nav-link sub">[filters]</a>
+      <a href="#ref-compressor"       class="nav-link sub">[compressor]</a>
+      <a href="#ref-limiter"          class="nav-link sub">[limiter]</a>
+      <a href="#ref-output"           class="nav-link sub">[output]</a>
+      <a href="#ref-visualization"    class="nav-link sub">[visualization]</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-group-label">Analysis</div>
+      <a href="#analysis-core"     class="nav-link">Core measurements</a>
+      <a href="#analysis-extended" class="nav-link">Extended analysis</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-group-label">Pipeline</div>
+      <a href="#filter-chain"     class="nav-link">Filter chain</a>
+      <a href="#output-structure" class="nav-link">Output structure</a>
+      <a href="#visualizations"   class="nav-link">Visualizations</a>
+      <a href="#report"           class="nav-link">Mastering report</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-group-label">Advanced</div>
+      <a href="#extending"    class="nav-link">Extending the pipeline</a>
+      <a href="#ai"           class="nav-link">AI integration</a>
+      <a href="#tauri"        class="nav-link">Bundling (Tauri)</a>
+      <a href="#troubleshoot" class="nav-link">Troubleshooting</a>
+    </div>
+  </nav>
+</aside>
+
+<!-- Main -->
+<main id="main">
+
+  <!-- Top bar -->
+  <div id="topbar">
+    <button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Toggle menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="breadcrumb">
+      <span>mastercraft</span>
+      <span class="sep">/</span>
+      <span class="current" id="breadcrumb-current">overview</span>
+    </div>
+    <div class="topbar-right">
+      <span class="version-badge">v0.1.0</span>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div id="hero">
+    <div class="hero-eyebrow">audio mastering pipeline</div>
+    <h1 class="hero-title">mastercraft</h1>
+    <p class="hero-subtitle">A command-line mastering pipeline built in Rust, powered by FFmpeg. Designed for experimental electronic music where you define the standard.</p>
+    <div class="hero-cards">
+      <a href="#quick-start" class="hero-card"><span class="hc-icon">▶</span><span class="hc-label">Quick start</span></a>
+      <a href="#creating-a-preset" class="hero-card"><span class="hc-icon">◈</span><span class="hc-label">Create a preset</span></a>
+      <a href="#cli-master" class="hero-card"><span class="hc-icon">$</span><span class="hc-label">CLI reference</span></a>
+      <a href="#analysis-extended" class="hero-card"><span class="hc-icon">≋</span><span class="hc-label">Analysis</span></a>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div id="content">
+
+    <!-- OVERVIEW -->
+    <section class="doc-section" id="overview">
+      <h1>Overview</h1>
+      <p>mastercraft is a command-line audio mastering pipeline that applies a configurable processing chain to audio files. It is built for self-produced, self-mixed experimental electronic music — material where no commercial loudness standard applies and the goal is a repeatable, documented process you own entirely.</p>
+      <p>It does not make aesthetic decisions. You define the targets, the filters, and the dynamics behavior in a preset file. mastercraft applies them, measures the result, and writes a report documenting exactly what happened.</p>
+
+      <h3>What it does</h3>
+      <ul>
+        <li>Measures integrated loudness (LUFS), true peak, loudness range, RMS, crest factor, dynamic range, DC offset, phase correlation, and spectral balance</li>
+        <li>Applies a configurable filter chain: high-pass, optional low-pass, optional compression, peak limiting, two-pass EBU R128 loudness normalization</li>
+        <li>Outputs all files for a track into a dedicated subfolder named after the track stem</li>
+        <li>Generates before/after spectrogram and waveform images</li>
+        <li>Writes a JSON report with all measurements, the exact FFmpeg filter string, and input/output delta</li>
+      </ul>
+
+      <h3>What it does not do</h3>
+      <ul>
+        <li>Make EQ decisions</li>
+        <li>Automatically match loudness to a reference track</li>
+        <li>Alter the stereo field, phase, or any aspect of the mix outside the defined chain</li>
+      </ul>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="doc-section" id="how-it-works">
+      <h1>How it works</h1>
+
+      <h2>The two-pass loudnorm process <a href="#how-it-works" class="h-anchor">#</a></h2>
+      <p>The core of every master run is FFmpeg's <code>loudnorm</code> filter, run twice.</p>
+      <p><strong>Pass 1 (analysis):</strong> The entire file is decoded and fed through loudnorm in measurement-only mode. No audio is written. The filter outputs a JSON block containing the file's measured integrated loudness, true peak, loudness range, and threshold.</p>
+      <p><strong>Pass 2 (processing):</strong> The file is decoded again through the full filter chain. The loudnorm filter on this pass receives the pass-1 measurements and applies a linear gain adjustment. Because it has full-file measurements, it can apply a precise, artifact-free gain change.</p>
+      <div class="callout warn">
+        <span class="callout-icon">⚠</span>
+        <div class="callout-body">
+          <div class="callout-title">Single-pass loudnorm will miss the target</div>
+          Single-pass loudnorm estimates in real time and will overshoot or undershoot depending on the material's dynamic structure. Two-pass always hits the target.
+        </div>
+      </div>
+
+      <h2>Extended analysis passes <a href="#how-it-works" class="h-anchor">#</a></h2>
+      <p>After pass 1, three additional FFmpeg passes collect extended analysis data:</p>
+      <ul>
+        <li><strong>astats pass</strong> — RMS level, peak level (for crest factor), DC offset</li>
+        <li><strong>aphasemeter pass</strong> — per-frame stereo phase correlation, averaged across the file; skipped for mono</li>
+        <li><strong>Three band-energy passes</strong> — <code>volumedetect</code> on low/mid/high bandpass-filtered signal to compute spectral balance and centroid estimate</li>
+      </ul>
+      <p>All extended passes are non-fatal. If any fail, the core analysis still completes.</p>
+
+      <h2>Filter chain execution <a href="#how-it-works" class="h-anchor">#</a></h2>
+      <p>The filter chain is a comma-separated FFmpeg <code>-af</code> string built by <code>build_filter_chain()</code> in <code>src/pipeline/process.rs</code>. Disabled stages are omitted entirely — they do not exist in the graph and have zero overhead.</p>
+    </section>
+
+    <!-- INSTALLATION -->
+    <section class="doc-section" id="installation">
+      <h1>Installation</h1>
+
+      <h2>Prerequisites <a href="#installation" class="h-anchor">#</a></h2>
+      <p>FFmpeg must be in your <code>$PATH</code>, or placed alongside the compiled mastercraft binary.</p>
+
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash — macOS</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">brew install ffmpeg rust</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash — Ubuntu / Debian</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">sudo apt install ffmpeg
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></pre>
+      </div>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash — Arch</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">sudo pacman -S ffmpeg rust</code></pre>
+      </div>
+
+      <h2>Build from source <a href="#installation" class="h-anchor">#</a></h2>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">git clone &lt;your-repo&gt;
+cd mastercraft
+cargo build --release
+# binary: ./target/release/mastercraft</code></pre>
+      </div>
+
+      <h2>Verify <a href="#installation" class="h-anchor">#</a></h2>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">mastercraft --version
+mastercraft --help</code></pre>
+      </div>
+    </section>
+
+    <!-- QUICK START -->
+    <section class="doc-section" id="quick-start">
+      <h1>Quick start</h1>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Analyze before mastering — always</div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-bash">mastercraft analyze track.wav</code></pre>
+            </div>
+            <p>This runs the full analysis suite and prints all measurements. No audio is written. Use this to understand the material before writing a preset.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Master with the default preset</div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-bash">mastercraft master track.wav</code></pre>
+            </div>
+            <p>Output goes to <code>./mastered/track/</code>. You get the mastered file, before/after images, and a JSON report.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Use a named preset</div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-bash">mastercraft master track.wav --preset noise
+mastercraft master track.wav --preset film -o ./deliverables/</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Test a preset without writing anything</div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-bash">mastercraft master track.wav --preset mypreset --dry-run</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLI MASTER -->
+    <section class="doc-section" id="cli-master">
+      <h1>CLI — master</h1>
+      <p>Runs the full mastering pipeline: pre-analysis, pre-visualization, processing, post-analysis, post-visualization, report.</p>
+
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">usage</span></div>
+        <pre><code class="language-bash">mastercraft master &lt;INPUT&gt; [OPTIONS]</code></pre>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>-p, --preset</code></td><td><code>default</code></td><td>Preset name. Searches <code>./presets/&lt;n&gt;.toml</code>.</td></tr>
+            <tr><td><code>-o, --output</code></td><td><code>./mastered/</code></td><td>Base output directory. A subfolder named after the input stem is created inside it.</td></tr>
+            <tr><td><code>--suffix</code></td><td><code>_master</code></td><td>Appended to input stem for the output filename.</td></tr>
+            <tr><td><code>--lufs</code></td><td>from preset</td><td>Override integrated loudness target.</td></tr>
+            <tr><td><code>--true-peak</code></td><td>from preset</td><td>Override true peak ceiling (dBTP).</td></tr>
+            <tr><td><code>--no-visualize</code></td><td>off</td><td>Skip spectrogram and waveform generation.</td></tr>
+            <tr><td><code>--dry-run</code></td><td>off</td><td>Analyze and print measurements. Write nothing.</td></tr>
+            <tr><td><code>-v, --verbose</code></td><td>off</td><td>Print every FFmpeg command as it runs.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">examples</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash"># Basic master, all defaults
+mastercraft master track.wav
+
+# Named preset, custom output directory
+mastercraft master track.wav -p film -o ./deliverables/
+
+# Override loudness without editing the preset
+mastercraft master track.wav --lufs -14
+
+# Verify what the pipeline would do without writing anything
+mastercraft master track.wav -p noise --dry-run -v
+
+# Custom filename suffix
+mastercraft master track.wav --suffix _2024_v1
+# → mastered/track/track_2024_v1.wav</code></pre>
+      </div>
+    </section>
+
+    <!-- CLI ANALYZE -->
+    <section class="doc-section" id="cli-analyze">
+      <h1>CLI — analyze</h1>
+      <p>Runs full analysis: loudnorm pass 1 + extended passes. Prints all measurements. No audio written.</p>
+
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">usage</span></div>
+        <pre><code class="language-bash">mastercraft analyze &lt;INPUT&gt; [OPTIONS]</code></pre>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>--visualize</code></td><td>off</td><td>Generate spectrogram and waveform images.</td></tr>
+            <tr><td><code>-o, --output</code></td><td><code>./</code></td><td>Output directory for images (only with <code>--visualize</code>).</td></tr>
+            <tr><td><code>-v, --verbose</code></td><td>off</td><td>Print FFmpeg commands.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">example output</span></div>
+        <pre><code class="language-text">  [analysis]
+    integrated loudness        -18.4 LUFS
+    true peak                  -1.2 dBTP
+    loudness range             14.6 LU
+    duration                   00:07:43
+    format                     pcm_s24le / 44100 Hz / 2 ch
+
+  [extended analysis]
+    RMS level                  -22.1 dBFS
+    crest factor               19.7 dB
+    dynamic range (DR)         DR17
+    DC offset                  0.00012
+    phase correlation          0.741  (in phase / wide stereo)
+    spectral balance           low 38%  mid 44%  high 18%
+    spectral centroid          1420 Hz</code></pre>
+      </div>
+    </section>
+
+    <!-- CLI PRESETS -->
+    <section class="doc-section" id="cli-presets">
+      <h1>CLI — presets / preset</h1>
+
+      <h3>List all presets</h3>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">mastercraft presets</code></pre>
+      </div>
+      <p>Lists all presets found across all search directories. Prints name, LUFS target, true peak, LRA, and description.</p>
+
+      <h3>Inspect a preset</h3>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">mastercraft preset noise
+mastercraft preset film > mybase.toml   # copy as starting point</code></pre>
+      </div>
+
+      <h3>Preset search order</h3>
+      <p>When you pass <code>--preset name</code>, mastercraft searches for <code>name.toml</code> in this order, using the first match:</p>
+      <ol>
+        <li><code>./presets/</code> relative to your current working directory <em>(use this)</em></li>
+        <li><code>&lt;exe_dir&gt;/presets/</code> — next to the compiled binary (for bundled installs)</li>
+        <li><code>~/.config/mastercraft/presets/</code> (or platform equivalent)</li>
+      </ol>
+    </section>
+
+    <!-- CREATING A PRESET -->
+    <section class="doc-section" id="creating-a-preset">
+      <h1>Creating a preset</h1>
+      <p>A preset is a TOML file that fully defines one mastering configuration. Every audio-affecting field maps directly to one FFmpeg filter parameter. There is no hidden processing between what you write in the file and what FFmpeg executes.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">◈</span>
+        <div class="callout-body">
+          <div class="callout-title">Always analyze before writing a preset</div>
+          The measured LRA, crest factor, and phase correlation from <code>mastercraft analyze</code> are the inputs to rational preset decisions. Guessing preset values without measurement produces arbitrary results.
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Analyze the material</div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-bash">mastercraft analyze track.wav</code></pre>
+            </div>
+            <p>Note every value. Specifically: <strong>integrated loudness</strong> (how far loudnorm will push gain), <strong>loudness range</strong> (your floor for <code>target.lra</code>), <strong>crest factor</strong> (determines limiter attack setting), <strong>phase correlation</strong> (negative or very low means a mix problem, not a mastering problem), <strong>spectral balance</strong> (informs whether highpass matters).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Decide where the file is going</div>
+            <p>This determines <code>target.lufs</code> and <code>target.true_peak</code>.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Destination</th><th>lufs</th><th>true_peak</th><th>Notes</th></tr></thead>
+                <tbody>
+                  <tr><td>Streaming (general)</td><td><code>-16.0</code></td><td><code>-1.0</code></td><td>Avoids all platform normalization</td></tr>
+                  <tr><td>Film / broadcast</td><td><code>-23.0</code></td><td><code>-2.0</code></td><td>EBU R128 — non-negotiable for delivery</td></tr>
+                  <tr><td>Vinyl prep</td><td><code>-12.0</code></td><td><code>-0.3</code></td><td>Cutting lathe adds its own limiting</td></tr>
+                  <tr><td>DJ pool</td><td><code>-9.0</code></td><td><code>-0.5</code></td><td>Club systems are loud</td></tr>
+                  <tr><td>Personal / archive</td><td><code>-18.0</code></td><td><code>-1.0</code></td><td>More headroom, full dynamics</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Copy and edit a preset</div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-bash">cp presets/default.toml presets/mypreset.toml</code></pre>
+            </div>
+            <p>Open <code>mypreset.toml</code> and make these specific changes:</p>
+            <ol>
+              <li>Set <code>[meta].name</code> to match the filename stem</li>
+              <li>Set <code>[target].lufs</code> from the destination table</li>
+              <li>Set <code>[target].true_peak</code> from the destination table</li>
+              <li>Set <code>[target].lra</code> to the measured LRA value <strong>or higher</strong></li>
+              <li>Set <code>[compressor].enabled</code> — default is <code>false</code>, keep it that way unless you have a specific reason</li>
+              <li>Set <code>[limiter].attack_ms</code> based on measured crest factor: high crest (>18 dB) → 5–10ms; low crest (<10 dB) → 0.5–2ms</li>
+              <li>Set <code>[output].sample_rate</code> to 48000 for film delivery, 44100 otherwise</li>
+            </ol>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Test without writing</div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-bash">mastercraft master track.wav -p mypreset --dry-run</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-title">Run and check the report delta</div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-bash">mastercraft master track.wav -p mypreset
+cat mastered/track/track_master_report.json</code></pre>
+            </div>
+            <p>Check the <code>delta</code> section. <code>lra_change</code> should be near zero or slightly positive. A large negative value (e.g. <code>-4</code>) means <code>target.lra</code> is set too low — loudnorm is compressing your dynamics. Raise it and re-run.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRESET FIELD REFERENCE -->
+    <section class="doc-section" id="ref-target">
+      <h1>Preset field reference — [target]</h1>
+      <p>These three values define the loudness signature of the master. They are all direct inputs to FFmpeg's <code>loudnorm</code> filter on pass 2.</p>
+
+      <div class="field-block">
+        <div class="field-header">
+          <span class="field-name">lufs</span>
+          <span class="field-type">float</span>
+          <span class="field-default">default: -16.0</span>
+        </div>
+        <div class="field-body">
+          Integrated loudness target in LUFS. The loudnorm filter adjusts overall gain to hit this value. Lower = quieter master with more headroom. This does not affect relative dynamics within the track — it shifts the overall gain only.
+          <div class="field-range">Range: −32.0 to −9.0</div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header">
+          <span class="field-name">true_peak</span>
+          <span class="field-type">float</span>
+          <span class="field-default">default: -1.0</span>
+        </div>
+        <div class="field-body">
+          Ceiling for intersample peaks in dBTP. Both the limiter and loudnorm enforce this. Intersample peaks occur when a DAC reconstructs the waveform between samples — a file where no sample exceeds 0 dBFS can still clip on playback. Never set this to 0.0.
+          <div class="field-range">Range: −3.0 to −0.1</div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header">
+          <span class="field-name">lra</span>
+          <span class="field-type">float</span>
+          <span class="field-default">default: 11.0</span>
+        </div>
+        <div class="field-body">
+          Loudness range target in Loudness Units. <strong>This is the most important value to get right.</strong> The loudnorm filter attempts to fit the material's dynamic range into this target. If the material's natural LRA exceeds the target, loudnorm compresses dynamics to fit — silently, with no warning. Set at or above the value reported by <code>mastercraft analyze</code>.
+          <div class="callout warn" style="margin-top:10px">
+            <span class="callout-icon">⚠</span>
+            <div class="callout-body">If measured LRA is 14 LU and you set <code>lra = 8</code>, loudnorm compresses 6 LU of your dynamic range away. Check <code>delta.lra_change</code> in the report after every master run.</div>
+          </div>
+          <div class="field-range">Range: 1.0 to 20.0</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="ref-filters">
+      <h1>Preset field reference — [filters]</h1>
+
+      <div class="field-block">
+        <div class="field-header">
+          <span class="field-name">highpass_hz</span>
+          <span class="field-type">float</span>
+          <span class="field-default">default: 20.0</span>
+        </div>
+        <div class="field-body">
+          Removes all audio below this frequency. Content below 20 Hz is inaudible but contributes to loudnorm energy measurements and occupies limiter headroom. A 20 Hz highpass is transparent to all audible content. For abstract/noise music where sub-bass is compositional, lower to 12 Hz. Set to 0 to disable entirely.
+          <div class="field-range">Range: 0 (disabled) to 120.0</div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header">
+          <span class="field-name">lowpass_hz</span>
+          <span class="field-type">float</span>
+          <span class="field-default">default: 0.0 (disabled)</span>
+        </div>
+        <div class="field-body">
+          Removes all audio above this frequency. Disabled by default. Only relevant for specific deliverable format requirements (broadcast frequency ceilings, telephone, AM radio). Do not enable without a specific reason.
+          <div class="field-range">Range: 0 (disabled) to 24000.0</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="ref-compressor">
+      <h1>Preset field reference — [compressor]</h1>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body">
+          <div class="callout-title">Disabled by default — intentionally</div>
+          The compressor processes the stereo bus simultaneously. It responds to the sum of all elements and changes the relationship between them. If you mixed it, you already made those decisions. Enable only with a specific reason.
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">enabled</span><span class="field-type">bool</span><span class="field-default">default: false</span></div>
+        <div class="field-body">Master switch. <code>true</code> or <code>false</code>.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">threshold_db</span><span class="field-type">float</span><span class="field-default">default: -18.0</span></div>
+        <div class="field-body">Level above which compression engages. Everything below is untouched. Lower threshold = compressor engages on more material. For mastering wide-range material, −18 to −12 dB engages on louder sections only.<div class="field-range">Range: −60.0 to 0.0</div></div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">ratio</span><span class="field-type">float</span><span class="field-default">default: 2.0</span></div>
+        <div class="field-body">Gain reduction above threshold. At 2:1, every 2 dB over threshold becomes 1 dB. For mastering: 1.5–2.0 is transparent. 4.0 is noticeable. Above 8.0 is limiting territory — use the limiter stage instead.<div class="field-range">Range: 1.0 to 20.0</div></div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">attack_ms</span><span class="field-type">float</span><span class="field-default">default: 20.0</span></div>
+        <div class="field-body">Response time when signal exceeds threshold. Fast attack (1–5ms) catches the initial transient. Slow attack (20–80ms) lets transients through before clamping. For material with intentionally designed transients, use slow attack to preserve the attack shape of sounds.<div class="field-range">Range: 0.1 to 200.0 ms</div></div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">release_ms</span><span class="field-type">float</span><span class="field-default">default: 250.0</span></div>
+        <div class="field-body">Recovery time after signal drops below threshold. Fast release can cause pumping on dense material. Slow release (250–500ms) is more transparent but can hold gain reduction into subsequent quiet passages.<div class="field-range">Range: 10.0 to 2000.0 ms</div></div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">makeup_db</span><span class="field-type">float</span><span class="field-default">default: 0.0</span></div>
+        <div class="field-body">Gain added after compression. The loudnorm stage normalizes the final level regardless — makeup gain here effectively shifts the operating threshold, not the output level.<div class="field-range">Range: 0.0 to 24.0</div></div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">knee_db</span><span class="field-type">float</span><span class="field-default">default: 2.0</span></div>
+        <div class="field-body">Width of the soft-knee transition around the threshold. 0 = hard knee (instant compression). 6 = soft knee (gradual onset). Soft knee sounds more natural on material without conventional dynamic structure.<div class="field-range">Range: 0.0 to 12.0</div></div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="ref-limiter">
+      <h1>Preset field reference — [limiter]</h1>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">enabled</span><span class="field-type">bool</span><span class="field-default">default: true</span></div>
+        <div class="field-body">Keep this on. The only reason to disable it is if you are certain your material never exceeds the true peak ceiling and want to skip the processing overhead — which is negligible.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">attack_ms</span><span class="field-type">float</span><span class="field-default">default: 5.0</span></div>
+        <div class="field-body">
+          Response time when a peak is detected. Use the measured crest factor to set this:
+          <div class="table-wrap" style="margin-top:10px">
+            <table>
+              <thead><tr><th>Crest factor</th><th>attack_ms</th><th>Why</th></tr></thead>
+              <tbody>
+                <tr><td>&gt; 18 dB</td><td>5–10 ms</td><td>Very transient — preserve attack shape</td></tr>
+                <tr><td>10–18 dB</td><td>2–5 ms</td><td>Moderate — catch peaks without dulling</td></tr>
+                <tr><td>&lt; 10 dB</td><td>0.5–2 ms</td><td>Dense / noise — catch everything</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="field-range">Range: 0.1 to 20.0 ms</div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">release_ms</span><span class="field-type">float</span><span class="field-default">default: 50.0</span></div>
+        <div class="field-body">Recovery time after a peak. Short (20–50ms) recovers fast; on dense material with consecutive peaks, this can cause a pumping texture. Long (100–300ms) is smoother but can hold gain reduction into quieter passages.<div class="field-range">Range: 10.0 to 500.0 ms</div></div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="ref-output">
+      <h1>Preset field reference — [output]</h1>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">format</span><span class="field-type">string</span><span class="field-default">default: "wav"</span></div>
+        <div class="field-body">Output file format. For archival and delivery, use <code>wav</code> or <code>flac</code>. WAV is uncompressed. FLAC is lossless compressed. MP3/AAC only for platform-specific delivery when an uncompressed master already exists.<div class="field-range">Values: wav · flac · mp3 · aac</div></div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">bit_depth</span><span class="field-type">integer</span><span class="field-default">default: 24</span></div>
+        <div class="field-body">PCM bit depth. 24-bit is the mastering standard. 16-bit for CD replication only. 32-bit float for intermediates going into another DAW for further processing. Applies to wav and flac only.<div class="field-range">Values: 16 · 24 · 32</div></div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">sample_rate</span><span class="field-type">integer</span><span class="field-default">default: 44100</span></div>
+        <div class="field-body">Output sample rate in Hz. 44100 for music delivery. 48000 for anything going into a film or video pipeline. Do not upsample — setting this higher than the input creates a file with no additional information.<div class="field-range">Common values: 44100 · 48000 · 96000</div></div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="ref-visualization">
+      <h1>Preset field reference — [visualization]</h1>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Field</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>enabled</code></td><td><code>true</code></td><td>Master switch. Overridden per-run by <code>--no-visualize</code>.</td></tr>
+            <tr><td><code>spectrogram</code></td><td><code>true</code></td><td>Generate spectrogram image. Log-scale frequency axis.</td></tr>
+            <tr><td><code>waveform</code></td><td><code>true</code></td><td>Generate waveform image. L/R channels split.</td></tr>
+            <tr><td><code>width</code></td><td><code>1920</code></td><td>Horizontal resolution in pixels. Increase for long pieces needing time resolution.</td></tr>
+            <tr><td><code>spectrogram_height</code></td><td><code>512</code></td><td>Vertical resolution. Increase to 768–1024 for dense spectral content.</td></tr>
+            <tr><td><code>waveform_height</code></td><td><code>200</code></td><td>Vertical resolution.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ANALYSIS CORE -->
+    <section class="doc-section" id="analysis-core">
+      <h1>Analysis — core measurements (EBU R128)</h1>
+
+      <div class="meas-grid">
+        <div class="meas-card">
+          <div class="meas-name">Integrated loudness</div>
+          <div class="meas-value">LUFS</div>
+          <div class="meas-desc">Average perceived loudness computed over all non-silent sections using ITU-R BS.1770. The number streaming platforms use for normalization. Use it to set <code>target.lufs</code>.</div>
+        </div>
+        <div class="meas-card">
+          <div class="meas-name">True peak</div>
+          <div class="meas-value">dBTP</div>
+          <div class="meas-desc">Maximum intersample peak measured at 4× oversampling. Accounts for DAC reconstruction between samples. Use it to set <code>target.true_peak</code>.</div>
+        </div>
+        <div class="meas-card">
+          <div class="meas-name">Loudness range</div>
+          <div class="meas-value">LU</div>
+          <div class="meas-desc">Statistical spread between quiet and loud sections (short-term loudness, 10th to 95th percentile). Set <code>target.lra</code> at or above this value.</div>
+        </div>
+        <div class="meas-card">
+          <div class="meas-name">Threshold</div>
+          <div class="meas-value">LUFS</div>
+          <div class="meas-desc">Loudness gate used during measurement. Sections below this level are excluded from the integrated loudness calculation.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANALYSIS EXTENDED -->
+    <section class="doc-section" id="analysis-extended">
+      <h1>Analysis — extended measurements</h1>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">RMS level</span><span class="field-type">dBFS</span></div>
+        <div class="field-body">Root mean square of the signal — average energy, not peak. More representative of perceived loudness than peak level. If RMS is −22 dBFS and true peak is −0.5 dBTP, the crest factor is 21.5 dB — very dynamic.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Crest factor</span><span class="field-type">dB</span></div>
+        <div class="field-body">
+          Difference between true peak and RMS level. Measures the ratio of transient peaks to average energy. Use this to set <code>limiter.attack_ms</code>.
+          <div class="table-wrap" style="margin-top:10px">
+            <table>
+              <thead><tr><th>Crest factor</th><th>Character</th></tr></thead>
+              <tbody>
+                <tr><td>&gt; 20 dB</td><td>Very transient / dynamic</td></tr>
+                <tr><td>14–20 dB</td><td>Normal range for mixed material</td></tr>
+                <tr><td>8–14 dB</td><td>Dense, compressed, or sustained</td></tr>
+                <tr><td>&lt; 8 dB</td><td>Heavily limited or noise-like</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Dynamic range (DR)</span><span class="field-type">score</span></div>
+        <div class="field-body">Approximate DR score derived from crest factor. DR14+ is considered excellent dynamics. DR8–13 moderate. Below DR8 indicates heavy limiting or compression already in the mix. Note: this is a crest-factor-based approximation, not a true block-based DR Meter computation.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">DC offset</span><span class="field-type">linear</span></div>
+        <div class="field-body">Constant bias in the signal at 0 Hz. Should be near zero. Values above ±0.001 indicate a DC problem: it consumes headroom, can cause clicks at cut points, and can cause the highpass filter to produce a click at the start of the file. Address at the mix or recording stage — the 20 Hz highpass will remove most DC offset in practice.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Phase correlation</span><span class="field-type">-1.0 to +1.0</span></div>
+        <div class="field-body">
+          Measures how correlated L and R channels are, averaged across the file. Phase correlation below 0.3 or negative is a mix problem — the master does not address it. Fix at the mix stage.
+          <div class="table-wrap" style="margin-top:10px">
+            <table>
+              <thead><tr><th>Value</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td>+0.8 to +1.0</td><td>Strong mono compatibility</td></tr>
+                <tr><td>+0.3 to +0.8</td><td>Normal stereo</td></tr>
+                <tr><td>0.0 to +0.3</td><td>Wide stereo — check mono fold-down</td></tr>
+                <tr><td>-0.2 to 0.0</td><td>Approaching out-of-phase</td></tr>
+                <tr><td>Below -0.2</td><td>Significant phase problem</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Spectral balance</span><span class="field-type">% per band</span></div>
+        <div class="field-body">Approximate percentage of total energy in three bands: low (&lt;250 Hz), mid (250 Hz–4 kHz), high (&gt;4 kHz). A rough diagnostic — use it to understand general spectral character before making EQ decisions or choosing highpass settings.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Spectral centroid</span><span class="field-type">Hz</span></div>
+        <div class="field-body">
+          Energy-weighted average frequency — the "center of mass" of the spectrum.
+          <div class="table-wrap" style="margin-top:10px">
+            <table>
+              <thead><tr><th>Range</th><th>Character</th></tr></thead>
+              <tbody>
+                <tr><td>&lt; 400 Hz</td><td>Sub/bass-dominant</td></tr>
+                <tr><td>400–1500 Hz</td><td>Low-mid heavy</td></tr>
+                <tr><td>1500–3000 Hz</td><td>Balanced</td></tr>
+                <tr><td>3000–5000 Hz</td><td>Bright / presence-heavy</td></tr>
+                <tr><td>&gt; 5000 Hz</td><td>Very bright / high-frequency dominant</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTER CHAIN -->
+    <section class="doc-section" id="filter-chain">
+      <h1>The filter chain</h1>
+
+      <h2>Structure and execution order <a href="#filter-chain" class="h-anchor">#</a></h2>
+      <div class="pipeline">
+        <div class="pipe-step">highpass</div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step disabled">lowpass (opt)</div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step disabled">compressor (opt)</div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step">limiter</div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step">loudnorm</div>
+      </div>
+
+      <p>Built in <code>src/pipeline/process.rs</code>, function <code>build_filter_chain()</code>. Disabled stages are omitted entirely from the FFmpeg filter graph — they have zero overhead.</p>
+
+      <h2>Example output <a href="#filter-chain" class="h-anchor">#</a></h2>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">ffmpeg -af value (default preset)</span></div>
+        <pre><code class="language-text">highpass=f=20.0,alimiter=level_in=1:level_out=0.891251:limit=0.891251:attack=5.0:release=50.0:asc=1,loudnorm=I=-16.0:TP=-1.0:LRA=11.0:measured_I=-18.43:measured_LRA=14.2:measured_TP=-2.1:measured_thresh=-28.7:offset=0.0:linear=true:print_format=summary</code></pre>
+      </div>
+
+      <h2>Viewing the chain used <a href="#filter-chain" class="h-anchor">#</a></h2>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">mastercraft master track.wav -v              # prints during run
+cat mastered/track/track_master_report.json  # stored in report</code></pre>
+      </div>
+
+      <h2>True peak conversion <a href="#filter-chain" class="h-anchor">#</a></h2>
+      <p>The limiter's <code>level_out</code> takes linear amplitude. The tool converts <code>target.true_peak</code> from dBTP automatically: <code>linear = 10 ^ (true_peak / 20)</code></p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>dBTP</th><th>Linear</th></tr></thead>
+          <tbody>
+            <tr><td>-0.5</td><td>0.944061</td></tr>
+            <tr><td>-1.0</td><td>0.891251</td></tr>
+            <tr><td>-2.0</td><td>0.794328</td></tr>
+            <tr><td>-3.0</td><td>0.707946</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- OUTPUT STRUCTURE -->
+    <section class="doc-section" id="output-structure">
+      <h1>Output folder structure</h1>
+      <p>Each master run creates a dedicated subfolder inside the base output directory, named after the input file stem.</p>
+
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">file tree</span></div>
+        <pre><code class="language-text">mastered/
+  track01/
+    track01_master.wav
+
+    track01_pre_spectrogram.png        individual pre-master spectrogram
+    track01_pre_waveform.png           individual pre-master waveform
+    track01_post_spectrogram.png       individual post-master spectrogram
+    track01_post_waveform.png          individual post-master waveform
+
+    track01_compare_spectrogram.png    pre (top) + post (bottom), amber separator
+    track01_compare_waveform.png       pre (top) + post (bottom), amber separator
+    track01_diff_spectrogram.png       contrast-amplified pixel difference
+    track01_diff_waveform.png          contrast-amplified pixel difference
+
+    track01_master_report.json
+  track02/
+    ...</code></pre>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ</span>
+        <div class="callout-body">The <code>--suffix</code> flag affects the audio filename only, not the folder name. <code>--suffix _v2</code> produces <code>mastered/track01/track01_v2.wav</code>.</div>
+      </div>
+    </section>
+
+    <!-- VISUALIZATIONS -->
+    <section class="doc-section" id="visualizations">
+      <h1>Visualization output</h1>
+      <p>Six images per master run. Individual pre/post images are the raw material. Compare and diff images are the quick-review tools — open those first.</p>
+
+      <h2>Individual visuals <a href="#visualizations" class="h-anchor">#</a></h2>
+      <h3>Spectrogram (<code>_pre_spectrogram.png</code>, <code>_post_spectrogram.png</code>)</h3>
+      <p>FFmpeg: <code>showspectrumpic=mode=combined:color=intensity:scale=log:legend=1</code> — X: time, Y: frequency (log scale), color: intensity. Legend on right edge.</p>
+      <h3>Waveform (<code>_pre_waveform.png</code>, <code>_post_waveform.png</code>)</h3>
+      <p>FFmpeg: <code>showwavespic=split_channels=1</code> — X: time, Y: amplitude, L channel top, R channel below in distinct colors.</p>
+
+      <h2>Stacked comparison (<code>_compare_spectrogram.png</code>, <code>_compare_waveform.png</code>) <a href="#visualizations" class="h-anchor">#</a></h2>
+      <p>Pre on top, post below, amber 3px separator line between them. Both aligned on the same time axis — scan vertically to compare any moment.</p>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">filter complex</span></div>
+        <pre><code class="language-text">[pre][post] → pad pre bottom +3px amber → vstack</code></pre>
+      </div>
+      <p><strong>Stacked spectrogram:</strong> Frequency content and brightness should be similar top and bottom. A band brighter in the bottom (post) image gained energy at those frequencies. Non-uniform differences — some bands brighter, some darker — indicate the compressor or limiter shaped specific moments rather than applying clean linear gain.</p>
+      <p><strong>Stacked waveform:</strong> Envelope shape should look similar. A noticeably different envelope in the post (bottom) image means <code>target.lra</code> is set too low and loudnorm is compressing dynamics to fit.</p>
+
+      <h2>Diff image (<code>_diff_spectrogram.png</code>, <code>_diff_waveform.png</code>) <a href="#visualizations" class="h-anchor">#</a></h2>
+      <p>Absolute pixel difference between pre and post, contrast-amplified and saturation-boosted. <strong>Black = no change. Bright = change.</strong></p>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">filter complex</span></div>
+        <pre><code class="language-text">[pre][post] → blend=difference → curves (12% maps to 100%) → hue=s=6</code></pre>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Diff appearance</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>Black / near-black</td><td>No change. Pipeline made no audible difference here.</td></tr>
+            <tr><td>Bright uniform region</td><td>Significant change — limiter peak, loudnorm gain, or compressor.</td></tr>
+            <tr><td>Yellow-tinted bright region</td><td>High-frequency energy increased at that moment.</td></tr>
+            <tr><td>Blue-tinted bright region</td><td>High-frequency energy decreased.</td></tr>
+            <tr><td>Isolated bright spikes (waveform diff)</td><td>Limiter caught specific transient peaks.</td></tr>
+            <tr><td>Dense uniform brightness (waveform diff)</td><td>Large, clean linear gain change from loudnorm — expected.</td></tr>
+            <tr><td>Nearly black waveform diff, faint glow</td><td>Ideal: clean linear gain, no dynamic processing artifacts.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">◈</span>
+        <div class="callout-body">
+          <div class="callout-title">Quick review order</div>
+          Open <code>_compare_spectrogram.png</code> first — full picture at a glance. Then <code>_diff_spectrogram.png</code> if you need to know specifically what changed. Individual pre/post images for detailed inspection.
+        </div>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section class="doc-section" id="report">
+      <h1>The mastering report</h1>
+      <p>Written to <code>&lt;out_dir&gt;/&lt;stem&gt;/&lt;stem&gt;&lt;suffix&gt;_report.json</code> after every master run.</p>
+
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">json — structure</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-json">{
+  "generated_at": "2024-01-15T10:23:44Z",
+  "input_file": "track.wav",
+  "output_file": "mastered/track/track_master.wav",
+  "preset": { ... full preset config ... },
+  "pre_analysis": {
+    "integrated_lufs": -18.4,
+    "true_peak_dbtp": -2.1,
+    "loudness_range_lu": 14.6,
+    "extended": {
+      "rms_dbfs": -22.1,
+      "crest_factor_db": 20.0,
+      "dynamic_range_dr": 17.0,
+      "dc_offset": 0.00012,
+      "phase_correlation": 0.74,
+      "spectral_balance": { "low_pct": 38.2, "mid_pct": 44.1, "high_pct": 17.7 },
+      "spectral_centroid_hz": 1420.0
+    }
+  },
+  "post_analysis": { ... same structure ... },
+  "filter_chain": "highpass=f=20.0,alimiter=...,loudnorm=...",
+  "delta": {
+    "lufs_change": 2.4,
+    "true_peak_change": 1.8,
+    "lra_change": -0.3,
+    "crest_factor_change": -0.2
+  }
+}</code></pre>
+      </div>
+
+      <p>The <code>filter_chain</code> field contains the exact string passed to FFmpeg. A master is fully reproducible:</p>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash — reproduce a master manually</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">ffmpeg -i input.wav -af "&lt;filter_chain&gt;" -acodec pcm_s24le -ar 44100 output.wav</code></pre>
+      </div>
+    </section>
+
+    <!-- EXTENDING -->
+    <section class="doc-section" id="extending">
+      <h1>Extending the pipeline</h1>
+
+      <h2>Adding a filter stage <a href="#extending" class="h-anchor">#</a></h2>
+      <p>Four changes across two files. Example: adding a configurable high-shelf EQ.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Add the field to <code>src/config.rs</code></div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">rust</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-rust">pub struct Filters {
+    pub highpass_hz:   f32,
+    pub lowpass_hz:    f32,
+    pub high_shelf_db: f32,   // new field
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Add a default in <code>impl Default for Preset</code></div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">rust</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-rust">filters: Filters {
+    highpass_hz:   20.0,
+    lowpass_hz:    0.0,
+    high_shelf_db: 0.0,   // 0 = disabled by convention
+},</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Push the filter in <code>build_filter_chain()</code> — <code>src/pipeline/process.rs</code></div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">rust</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-rust">if preset.filters.high_shelf_db != 0.0 {
+    filters.push(format!(
+        "treble=g={:.1}:f=8000",
+        preset.filters.high_shelf_db
+    ));
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Add to your preset <code>.toml</code></div>
+            <div class="code-block-wrap">
+              <div class="code-header"><span class="code-lang">toml</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+              <pre><code class="language-toml">[filters]
+highpass_hz   = 20.0
+lowpass_hz    = 0.0
+high_shelf_db = 1.5   # gentle high shelf boost</code></pre>
+            </div>
+            <p>Then rebuild: <code>cargo build --release</code></p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Useful FFmpeg audio filters <a href="#extending" class="h-anchor">#</a></h2>
+      <p>Full reference: <a href="https://ffmpeg.org/ffmpeg-filters.html" target="_blank">ffmpeg.org/ffmpeg-filters.html</a></p>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">ffmpeg filter strings</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-text"># Parametric EQ band
+equalizer=f=1000:width_type=o:width=2:g=-3.0
+
+# High shelf boost
+treble=g=2.0:f=8000
+
+# Low shelf boost
+bass=g=1.0:f=100
+
+# Stereo widening
+extrastereo=m=1.5
+
+# Noise gate
+agate=threshold=-40dB:ratio=2:attack=20:release=250
+
+# M/S encode
+pan=stereo|c0=0.5*c0+0.5*c1|c1=0.5*c0-0.5*c1
+
+# Static gain
+volume=2dB</code></pre>
+      </div>
+    </section>
+
+    <!-- AI -->
+    <section class="doc-section" id="ai">
+      <h1>AI integration</h1>
+
+      <h2>matchering — reference-based mastering <a href="#ai" class="h-anchor">#</a></h2>
+      <p><a href="https://github.com/sergree/matchering" target="_blank">matchering</a> analyzes a reference track and applies its spectral and loudness character to your track. Run it as a pre-pass before mastercraft.</p>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">pip install matchering
+
+python3 &lt;&lt; 'EOF'
+import matchering as mg
+mg.process(
+    target='track.wav',
+    reference='reference.wav',
+    results=[mg.Result('track_matched.wav', use_limiter=False)]
+)
+EOF
+
+mastercraft master track_matched.wav --preset default</code></pre>
+      </div>
+      <p>Pass <code>use_limiter=False</code> to matchering. mastercraft's limiter handles the peak ceiling.</p>
+
+      <h2>demucs — source separation <a href="#ai" class="h-anchor">#</a></h2>
+      <p><a href="https://github.com/facebookresearch/demucs" target="_blank">demucs</a> separates stems. For mastering experimental music this is primarily useful for analysis — inspecting spectral and dynamic character of individual elements before mastering decisions.</p>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-bash">pip install demucs
+python3 -m demucs --two-stems=vocals track.wav
+# examine separated/ directory
+mastercraft master track.wav --preset default</code></pre>
+      </div>
+    </section>
+
+    <!-- TAURI -->
+    <section class="doc-section" id="tauri">
+      <h1>Bundling (Tauri)</h1>
+      <p>When you are ready to wrap mastercraft in a desktop UI via Tauri:</p>
+
+      <h3>1. mastercraft as a Tauri sidecar</h3>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">json — tauri.conf.json</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-json">"bundle": {
+  "externalBin": ["../mastercraft/target/release/mastercraft"]
+}</code></pre>
+      </div>
+
+      <h3>2. FFmpeg as a sidecar</h3>
+      <p>Use the <code>ffmpeg-sidecar</code> crate for automatic platform-specific FFmpeg download on first run:</p>
+      <div class="code-block-wrap">
+        <div class="code-header"><span class="code-lang">toml — Cargo.toml</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+        <pre><code class="language-toml">ffmpeg-sidecar = "1.1"</code></pre>
+      </div>
+      <p>Update <code>src/ffmpeg.rs</code> to check the sidecar path before the <code>$PATH</code> lookup.</p>
+
+      <h3>3. Preset resolution</h3>
+      <p>The preset loader already searches <code>&lt;exe_dir&gt;/presets/</code>. Bundle your <code>.toml</code> files there and they resolve automatically.</p>
+
+      <h3>4. Frontend interface</h3>
+      <p>The Tauri frontend calls the sidecar, waits for exit, and reads the JSON report from the output directory. No additional IPC beyond filesystem reads is needed for the initial UI.</p>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="doc-section" id="troubleshoot">
+      <h1>Troubleshooting</h1>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">ffmpeg not found</span></div>
+        <div class="field-body">FFmpeg is not in <code>$PATH</code> and not placed next to the mastercraft binary. Install it with your package manager, or copy the binary to the same directory as <code>mastercraft</code>.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Preset 'name' not found</span></div>
+        <div class="field-body"><code>presets/name.toml</code> does not exist in any search directory. Run <code>mastercraft presets</code> to see what is found. Confirm you are running from the directory containing <code>./presets/</code>.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Post-master LRA much lower than pre-master LRA</span></div>
+        <div class="field-body"><code>target.lra</code> is set below the measured LRA. Loudnorm is compressing dynamics to fit. Raise <code>target.lra</code> to at or above the measured value and re-run.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Phase correlation is negative or very low</span></div>
+        <div class="field-body">Stereo phase issue in the mix. The mastering pipeline does not address this. Fix at the mix stage before mastering.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Extended analysis missing from output</span></div>
+        <div class="field-body">The extended analysis passes ran but failed non-fatally. The core master still completed. Run with <code>--verbose</code> to see which pass failed and why. Likely cause: very short file, or an FFmpeg build missing a specific filter.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Output louder or quieter than expected</span></div>
+        <div class="field-body">Check the report's <code>delta.lufs_change</code>. If it does not match <code>target.lufs − pre.integrated_lufs</code>, the pass-1 JSON was not correctly parsed. Run with <code>--verbose</code> and inspect the raw loudnorm JSON in FFmpeg's stderr output.</div>
+      </div>
+
+      <div class="field-block">
+        <div class="field-header"><span class="field-name">Spectrogram or waveform images missing</span></div>
+        <div class="field-body">Requires FFmpeg compiled with <code>lavfi</code> virtual device support. Verify: <code>ffmpeg -filters | grep showspectrum</code>. If missing, your FFmpeg build is minimal — install a full build from your package manager.</div>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+</main><!-- /main -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-rust.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-toml.min.js"></script>
+
+<script>
+// Progress bar
+const bar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const main = document.getElementById('main');
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.width = (window.scrollY / total * 100) + '%';
+});
+
+// Active nav on scroll
+const sections = document.querySelectorAll('.doc-section, #hero');
+const navLinks = document.querySelectorAll('.nav-link');
+const breadcrumb = document.getElementById('breadcrumb-current');
+
+const navMap = {};
+navLinks.forEach(l => {
+  const id = l.getAttribute('href').replace('#','');
+  navMap[id] = l;
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const id = entry.target.id;
+      if (navMap[id]) {
+        navMap[id].classList.add('active');
+        breadcrumb.textContent = navMap[id].textContent.trim();
+      }
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// Copy code
+function copyCode(btn) {
+  const pre = btn.closest('.code-block-wrap').querySelector('pre');
+  const text = pre.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+// Search
+const searchIndex = [
+  { title: 'Overview',               id: 'overview',          section: 'Getting started' },
+  { title: 'How it works',           id: 'how-it-works',      section: 'Getting started' },
+  { title: 'Installation',           id: 'installation',      section: 'Getting started' },
+  { title: 'Quick start',            id: 'quick-start',       section: 'Getting started' },
+  { title: 'master command',         id: 'cli-master',        section: 'CLI' },
+  { title: 'analyze command',        id: 'cli-analyze',       section: 'CLI' },
+  { title: 'presets command',        id: 'cli-presets',       section: 'CLI' },
+  { title: 'Creating a preset',      id: 'creating-a-preset', section: 'Presets' },
+  { title: '[target] fields',        id: 'ref-target',        section: 'Presets' },
+  { title: '[filters] fields',       id: 'ref-filters',       section: 'Presets' },
+  { title: '[compressor] fields',    id: 'ref-compressor',    section: 'Presets' },
+  { title: '[limiter] fields',       id: 'ref-limiter',       section: 'Presets' },
+  { title: '[output] fields',        id: 'ref-output',        section: 'Presets' },
+  { title: '[visualization] fields', id: 'ref-visualization', section: 'Presets' },
+  { title: 'LUFS',                   id: 'ref-target',        section: 'Presets' },
+  { title: 'Loudness range / LRA',   id: 'ref-target',        section: 'Presets' },
+  { title: 'True peak',              id: 'ref-target',        section: 'Presets' },
+  { title: 'Compressor',             id: 'ref-compressor',    section: 'Presets' },
+  { title: 'Limiter',                id: 'ref-limiter',       section: 'Presets' },
+  { title: 'Core measurements',      id: 'analysis-core',     section: 'Analysis' },
+  { title: 'Extended analysis',      id: 'analysis-extended', section: 'Analysis' },
+  { title: 'RMS level',              id: 'analysis-extended', section: 'Analysis' },
+  { title: 'Crest factor',           id: 'analysis-extended', section: 'Analysis' },
+  { title: 'Phase correlation',      id: 'analysis-extended', section: 'Analysis' },
+  { title: 'Spectral balance',       id: 'analysis-extended', section: 'Analysis' },
+  { title: 'DC offset',              id: 'analysis-extended', section: 'Analysis' },
+  { title: 'Filter chain',           id: 'filter-chain',      section: 'Pipeline' },
+  { title: 'Output folder structure',id: 'output-structure',  section: 'Pipeline' },
+  { title: 'Visualization output',   id: 'visualizations',    section: 'Pipeline' },
+  { title: 'Mastering report',       id: 'report',            section: 'Pipeline' },
+  { title: 'Extending the pipeline', id: 'extending',         section: 'Advanced' },
+  { title: 'AI integration',         id: 'ai',                section: 'Advanced' },
+  { title: 'matchering',             id: 'ai',                section: 'Advanced' },
+  { title: 'Tauri bundling',         id: 'tauri',             section: 'Advanced' },
+  { title: 'Troubleshooting',        id: 'troubleshoot',      section: 'Advanced' },
+];
+
+const input  = document.getElementById('search-input');
+const results = document.getElementById('search-results');
+
+input.addEventListener('input', () => {
+  const q = input.value.trim().toLowerCase();
+  if (!q) { results.classList.remove('visible'); return; }
+  const matches = searchIndex.filter(i => i.title.toLowerCase().includes(q)).slice(0, 8);
+  if (!matches.length) { results.classList.remove('visible'); return; }
+  results.innerHTML = matches.map(m =>
+    `<a class="search-result" href="#${m.id}"><div>${m.title}</div><div class="sr-section">${m.section}</div></a>`
+  ).join('');
+  results.classList.add('visible');
+});
+
+document.addEventListener('click', e => {
+  if (!document.getElementById('search-box').contains(e.target)) {
+    results.classList.remove('visible');
+  }
+});
+
+results.addEventListener('click', () => {
+  results.classList.remove('visible');
+  input.value = '';
+});
+
+// Close sidebar on mobile link click
+navLinks.forEach(l => l.addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('open');
+}));
+</script>
+</body>
+</html>
