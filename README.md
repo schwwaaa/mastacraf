@@ -1,7 +1,11 @@
-# mastacraf
+<p align="center">
+  <img width="300px" height="950px" src="https://github.com/schwwaaa/mastacraf/blob/main/assets/schwwaaa-mastacraf-logo.png?raw=true"/>  
+</p>
 
-Custom audio mastering pipeline for experimental electronic music.  
-Built around FFmpeg. Designed to be yours.
+<p align="center">
+  <strong>Custom audio mastering pipeline for experimental electronic music.</strong><br/>
+  <strong>Built around FFmpeg. Designed to be yours.</strong><br/>  
+</p>
 
 ---
 
