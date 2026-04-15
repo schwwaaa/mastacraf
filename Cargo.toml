@@ -1,12 +1,12 @@
 [package]
-name = "mastercraft"
+name = "mastacraf"
 version = "0.1.0"
 edition = "2021"
 description = "Custom audio mastering pipeline for experimental electronic music"
 license = "MIT"
 
 [[bin]]
-name = "mastercraft"
+name = "mastacraf"
 path = "src/main.rs"
 
 [dependencies]

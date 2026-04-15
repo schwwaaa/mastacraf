@@ -1,4 +1,4 @@
-# mastercraft documentation
+# mastacraf documentation
 
 **Version:** 0.1.0  
 **License:** MIT
@@ -28,7 +28,7 @@
 
 ## Overview
 
-mastercraft is a command-line audio mastering pipeline built in Rust, using FFmpeg as its sole processing core. It is designed for mastering self-produced, self-mixed experimental electronic music where no commercial loudness standard applies and the goal is a repeatable, documented, and tunable process you own entirely.
+mastacraf is a command-line audio mastering pipeline built in Rust, using FFmpeg as its sole processing core. It is designed for mastering self-produced, self-mixed experimental electronic music where no commercial loudness standard applies and the goal is a repeatable, documented, and tunable process you own entirely.
 
 It does not make aesthetic decisions. It applies the processing chain you define in a preset file, measures the result, and writes a report documenting exactly what happened.
 
@@ -102,16 +102,16 @@ sudo pacman -S ffmpeg
 
 ```sh
 git clone <repo>
-cd mastercraft
+cd mastacraf
 cargo build --release
-# binary: ./target/release/mastercraft
+# binary: ./target/release/mastacraf
 ```
 
 ### Verify
 
 ```sh
-mastercraft --version
-mastercraft --help
+mastacraf --version
+mastacraf --help
 ```
 
 ---
@@ -120,26 +120,26 @@ mastercraft --help
 
 ```sh
 # Analyze first — always do this before writing a preset
-mastercraft analyze track.wav
+mastacraf analyze track.wav
 
 # Master with default preset
-mastercraft master track.wav
+mastacraf master track.wav
 
 # Master with a named preset
-mastercraft master track.wav --preset noise
+mastacraf master track.wav --preset noise
 
 # Test a preset without writing anything
-mastercraft master track.wav --preset mypreset --dry-run
+mastacraf master track.wav --preset mypreset --dry-run
 ```
 
 ---
 
 ## CLI reference
 
-### `mastercraft master`
+### `mastacraf master`
 
 ```
-mastercraft master <INPUT> [OPTIONS]
+mastacraf master <INPUT> [OPTIONS]
 ```
 
 | Flag / Arg        | Default        | Description |
@@ -167,10 +167,10 @@ mastercraft master <INPUT> [OPTIONS]
 
 ---
 
-### `mastercraft analyze`
+### `mastacraf analyze`
 
 ```
-mastercraft analyze <INPUT> [OPTIONS]
+mastacraf analyze <INPUT> [OPTIONS]
 ```
 
 Runs full analysis: loudnorm pass 1 + extended passes (RMS, crest, phase, spectral balance). Prints all measurements to stdout. No audio written.
@@ -184,19 +184,19 @@ Runs full analysis: loudnorm pass 1 + extended passes (RMS, crest, phase, spectr
 
 ---
 
-### `mastercraft presets`
+### `mastacraf presets`
 
 Lists all presets found in the search path. Prints name, LUFS, true peak, LRA, description.
 
 ---
 
-### `mastercraft preset <n>`
+### `mastacraf preset <n>`
 
 Prints the full content of a named preset to stdout.
 
 ```sh
-mastercraft preset film
-mastercraft preset noise > mybase.toml
+mastacraf preset film
+mastacraf preset noise > mybase.toml
 ```
 
 ---
@@ -208,7 +208,7 @@ This is the core workflow. A preset is a TOML file that fully defines one master
 ### Step 1: Analyze the material
 
 ```sh
-mastercraft analyze track.wav
+mastacraf analyze track.wav
 ```
 
 Read every value in the output before touching a preset file. Specifically note:
@@ -253,7 +253,7 @@ Open `mypreset.toml`. Make these changes:
 ### Step 4: Test without writing
 
 ```sh
-mastercraft master track.wav -p mypreset --dry-run
+mastacraf master track.wav -p mypreset --dry-run
 ```
 
 This runs pass 1 and prints pre-master measurements. You are not writing anything.
@@ -261,7 +261,7 @@ This runs pass 1 and prints pre-master measurements. You are not writing anythin
 ### Step 5: Run and check the report
 
 ```sh
-mastercraft master track.wav -p mypreset
+mastacraf master track.wav -p mypreset
 cat mastered/track/track_master_report.json
 ```
 
@@ -297,7 +297,7 @@ Intersample peaks occur when a DAC reconstructs the waveform between samples. A 
 Loudness range target in Loudness Units.  
 **Range:** 1.0 to 20.0 | **Default:** 11.0
 
-**This is the most important value to get right.** The loudnorm filter attempts to fit the material's dynamic range into this target. If the material's natural LRA exceeds the target, loudnorm compresses dynamics to make it fit, silently. Set at or above the measured LRA from `mastercraft analyze`.
+**This is the most important value to get right.** The loudnorm filter attempts to fit the material's dynamic range into this target. If the material's natural LRA exceeds the target, loudnorm compresses dynamics to make it fit, silently. Set at or above the measured LRA from `mastacraf analyze`.
 
 ---
 
@@ -503,7 +503,7 @@ highpass=f=20.0,alimiter=level_in=1:level_out=0.891251:limit=0.891251:attack=5.0
 ### Viewing the chain used
 
 ```sh
-mastercraft master track.wav -v           # prints it during the run
+mastacraf master track.wav -v           # prints it during the run
 cat mastered/track/track_master_report.json | python3 -m json.tool | grep filter_chain
 ```
 
@@ -548,13 +548,13 @@ mastered/
 
 To change the base directory:
 ```sh
-mastercraft master track01.wav -o ./album_masters/
+mastacraf master track01.wav -o ./album_masters/
 # → mastered files go to ./album_masters/track01/
 ```
 
 The subfolder is always the input stem. The `--suffix` flag affects only the audio output filename, not the folder:
 ```sh
-mastercraft master track01.wav --suffix _v2
+mastacraf master track01.wav --suffix _v2
 # folder:     mastered/track01/
 # audio file: mastered/track01/track01_v2.wav
 ```
@@ -774,10 +774,10 @@ mg.process(
 )
 EOF
 
-mastercraft master track_matched.wav --preset default
+mastacraf master track_matched.wav --preset default
 ```
 
-Pass `use_limiter=False` to matchering. mastercraft's limiter handles the peak ceiling.
+Pass `use_limiter=False` to matchering. mastacraf's limiter handles the peak ceiling.
 
 ### demucs (source separation for analysis)
 
@@ -787,7 +787,7 @@ Pass `use_limiter=False` to matchering. mastercraft's limiter handles the peak c
 pip install demucs
 python3 -m demucs --two-stems=vocals track.wav
 # examine separated/
-mastercraft master track.wav --preset default
+mastacraf master track.wav --preset default
 ```
 
 ---
@@ -796,11 +796,11 @@ mastercraft master track.wav --preset default
 
 When wrapping in a Tauri desktop app:
 
-**1. mastercraft as a Tauri sidecar** — in `src-tauri/tauri.conf.json`:
+**1. mastacraf as a Tauri sidecar** — in `src-tauri/tauri.conf.json`:
 
 ```json
 "bundle": {
-  "externalBin": ["../mastercraft/target/release/mastercraft"]
+  "externalBin": ["../mastacraf/target/release/mastacraf"]
 }
 ```
 
@@ -821,10 +821,10 @@ Update `src/ffmpeg.rs` to check the sidecar path before the `$PATH` lookup.
 ## Troubleshooting
 
 **`ffmpeg not found`**  
-FFmpeg is not in `$PATH` and not bundled next to the binary. Install it or copy the binary to the same directory as `mastercraft`.
+FFmpeg is not in `$PATH` and not bundled next to the binary. Install it or copy the binary to the same directory as `mastacraf`.
 
 **`Preset 'name' not found`**  
-`presets/name.toml` does not exist in any search directory. Run `mastercraft presets` to see what is found. Confirm you are running from the directory containing `./presets/`.
+`presets/name.toml` does not exist in any search directory. Run `mastacraf presets` to see what is found. Confirm you are running from the directory containing `./presets/`.
 
 **Post-master LRA is much lower than pre-master LRA**  
 `target.lra` is set below the measured LRA. Loudnorm is compressing dynamics to fit. Raise `target.lra` to at or above the measured value and re-run.

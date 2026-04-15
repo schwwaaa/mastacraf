@@ -7,7 +7,7 @@ use crate::{config, pipeline};
 
 #[derive(Parser)]
 #[command(
-    name = "mastercraft",
+    name = "mastacraf",
     version,
     about = "Custom audio mastering pipeline for experimental electronic music"
 )]
@@ -29,7 +29,7 @@ impl Cli {
 }
 
 fn print_banner() {
-    println!("{}", "mastercraft".bold().cyan());
+    println!("{}", "mastacraf".bold().cyan());
     println!("{}", "audio mastering pipeline for experimental music".dimmed());
     println!();
 }

@@ -53,7 +53,7 @@ impl Ffmpeg {
              Arch:    sudo pacman -S ffmpeg\n\
              Windows: https://ffmpeg.org/download.html\n\
              \n\
-             Or place the ffmpeg binary next to the mastercraft executable."
+             Or place the ffmpeg binary next to the mastacraf executable."
         )
     }
 

@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-04-15T01:06:12.343632+00:00",
+  "generated_at": "2026-04-15T03:53:40.010195+00:00",
   "input_file": "/Users/tgm/Desktop/_audiotests/freebase.wav",
-  "output_file": "mastered/freebase_master.wav",
+  "output_file": "mastered/freebase/freebase_master.wav",
   "preset": {
     "meta": {
       "name": "default",
@@ -55,7 +55,20 @@
     "sample_rate": 44100,
     "channels": 2,
     "bit_depth": 16,
-    "codec": "pcm_s16le ([1][0][0][0] / 0x0001)"
+    "codec": "pcm_s16le ([1][0][0][0] / 0x0001)",
+    "extended": {
+      "rms_dbfs": -20.582403,
+      "crest_factor_db": 20.582668,
+      "dynamic_range_dr": 17.495268,
+      "dc_offset": -0.000034,
+      "phase_correlation": null,
+      "spectral_balance": {
+        "low_pct": 69.34249,
+        "mid_pct": 23.227335,
+        "high_pct": 7.430181
+      },
+      "spectral_centroid_hz": 913.3659
+    }
   },
   "post_analysis": {
     "integrated_lufs": -16.12,
@@ -66,12 +79,26 @@
     "sample_rate": 44100,
     "channels": 2,
     "bit_depth": 24,
-    "codec": "pcm_s24le ([1][0][0][0] / 0x0001)"
+    "codec": "pcm_s24le ([1][0][0][0] / 0x0001)",
+    "extended": {
+      "rms_dbfs": -15.808906,
+      "crest_factor_db": 14.808917,
+      "dynamic_range_dr": 12.58758,
+      "dc_offset": -0.000117,
+      "phase_correlation": null,
+      "spectral_balance": {
+        "low_pct": 66.29692,
+        "mid_pct": 26.091167,
+        "high_pct": 7.6119065
+      },
+      "spectral_centroid_hz": 952.73535
+    }
   },
   "filter_chain": "highpass=f=20.0,alimiter=level_in=1:level_out=0.891251:limit=0.891251:attack=5.0:release=50.0:asc=1,loudnorm=I=-16.0:TP=-1.0:LRA=11.0:measured_I=-21.74:measured_LRA=4.70:measured_TP=0.25:measured_thresh=-31.94:offset=-0.71:linear=true:print_format=summary",
   "delta": {
     "lufs_change": 5.619999,
     "true_peak_change": -1.24,
-    "lra_change": -0.099999905
+    "lra_change": -0.099999905,
+    "crest_factor_change": -5.7737513
   }
 }

@@ -1,4 +1,4 @@
-# mastercraft
+# mastacraf
 
 Custom audio mastering pipeline for experimental electronic music.  
 Built around FFmpeg. Designed to be yours.
@@ -22,9 +22,9 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ```sh
 git clone <your repo>
-cd mastercraft
+cd mastacraf
 cargo build --release
-# Binary: ./target/release/mastercraft
+# Binary: ./target/release/mastacraf
 ```
 
 ---
@@ -34,10 +34,10 @@ cargo build --release
 ### Master a file
 
 ```sh
-mastercraft master track.wav
-mastercraft master track.wav --preset noise
-mastercraft master track.wav --preset film --output ./deliverables/
-mastercraft master track.wav --lufs -18 --true-peak -0.5
+mastacraf master track.wav
+mastacraf master track.wav --preset noise
+mastacraf master track.wav --preset film --output ./deliverables/
+mastacraf master track.wav --lufs -18 --true-peak -0.5
 ```
 
 **Options:**
@@ -56,15 +56,15 @@ mastercraft master track.wav --lufs -18 --true-peak -0.5
 ### Analyze only
 
 ```sh
-mastercraft analyze track.wav
-mastercraft analyze track.wav --visualize
+mastacraf analyze track.wav
+mastacraf analyze track.wav --visualize
 ```
 
 ### Preset management
 
 ```sh
-mastercraft presets            # list all available presets
-mastercraft preset noise       # dump noise.toml to stdout
+mastacraf presets            # list all available presets
+mastacraf preset noise       # dump noise.toml to stdout
 ```
 
 ---
@@ -91,7 +91,7 @@ used, pre/post comparison, and preset settings — so a master is reproducible.
 ## Presets
 
 Presets live in `./presets/` (relative to your working directory). Copy and
-modify any `.toml` file to create a new preset. Run `mastercraft presets` to
+modify any `.toml` file to create a new preset. Run `mastacraf presets` to
 confirm it's found.
 
 Included presets:
@@ -113,7 +113,7 @@ tuning — you might have `ambient.toml`, `drone.toml`, `release.toml`, etc.
 
 [matchering](https://github.com/sergree/matchering) is an open-source Python
 library that analyzes a reference track and matches your mix to it. It works
-well as a pre-pass before running mastercraft's loudnorm/limiting stage.
+well as a pre-pass before running mastacraf's loudnorm/limiting stage.
 
 ```sh
 pip install matchering
@@ -129,7 +129,7 @@ mg.process(
 "
 
 # Then master the matched output:
-mastercraft master track_matched.wav --preset default
+mastacraf master track_matched.wav --preset default
 ```
 
 ### Local ONNX models
@@ -154,7 +154,7 @@ When you're ready to wrap this in a Tauri app:
 1. Compile the Rust binary as a Tauri sidecar:
    ```toml
    # tauri.conf.json
-   "bundle": { "externalBin": ["../mastercraft/target/release/mastercraft"] }
+   "bundle": { "externalBin": ["../mastacraf/target/release/mastacraf"] }
    ```
 
 2. Bundle the FFmpeg binary as a second sidecar (or use `ffmpeg-sidecar` crate

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>mastercraft — documentation</title>
+<title>mastacraf — documentation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -833,7 +833,7 @@
           <path d="M2 12 L5 6 L8 10 L11 4 L14 12" stroke="#09090c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <span class="logo-text">mastercraft</span>
+      <span class="logo-text">mastacraf</span>
     </a>
     <div class="logo-version">v0.1.0 — documentation</div>
   </div>
@@ -908,7 +908,7 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="breadcrumb">
-      <span>mastercraft</span>
+      <span>mastacraf</span>
       <span class="sep">/</span>
       <span class="current" id="breadcrumb-current">overview</span>
     </div>
@@ -920,7 +920,7 @@
   <!-- Hero -->
   <div id="hero">
     <div class="hero-eyebrow">audio mastering pipeline</div>
-    <h1 class="hero-title">mastercraft</h1>
+    <h1 class="hero-title">mastacraf</h1>
     <p class="hero-subtitle">A command-line mastering pipeline built in Rust, powered by FFmpeg. Designed for experimental electronic music where you define the standard.</p>
     <div class="hero-cards">
       <a href="#quick-start" class="hero-card"><span class="hc-icon">▶</span><span class="hc-label">Quick start</span></a>
@@ -936,8 +936,8 @@
     <!-- OVERVIEW -->
     <section class="doc-section" id="overview">
       <h1>Overview</h1>
-      <p>mastercraft is a command-line audio mastering pipeline that applies a configurable processing chain to audio files. It is built for self-produced, self-mixed experimental electronic music — material where no commercial loudness standard applies and the goal is a repeatable, documented process you own entirely.</p>
-      <p>It does not make aesthetic decisions. You define the targets, the filters, and the dynamics behavior in a preset file. mastercraft applies them, measures the result, and writes a report documenting exactly what happened.</p>
+      <p>mastacraf is a command-line audio mastering pipeline that applies a configurable processing chain to audio files. It is built for self-produced, self-mixed experimental electronic music — material where no commercial loudness standard applies and the goal is a repeatable, documented process you own entirely.</p>
+      <p>It does not make aesthetic decisions. You define the targets, the filters, and the dynamics behavior in a preset file. mastacraf applies them, measures the result, and writes a report documenting exactly what happened.</p>
 
       <h3>What it does</h3>
       <ul>
@@ -990,7 +990,7 @@
       <h1>Installation</h1>
 
       <h2>Prerequisites <a href="#installation" class="h-anchor">#</a></h2>
-      <p>FFmpeg must be in your <code>$PATH</code>, or placed alongside the compiled mastercraft binary.</p>
+      <p>FFmpeg must be in your <code>$PATH</code>, or placed alongside the compiled mastacraf binary.</p>
 
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">bash — macOS</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
@@ -1010,16 +1010,16 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></pre>
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
         <pre><code class="language-bash">git clone &lt;your-repo&gt;
-cd mastercraft
+cd mastacraf
 cargo build --release
-# binary: ./target/release/mastercraft</code></pre>
+# binary: ./target/release/mastacraf</code></pre>
       </div>
 
       <h2>Verify <a href="#installation" class="h-anchor">#</a></h2>
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-        <pre><code class="language-bash">mastercraft --version
-mastercraft --help</code></pre>
+        <pre><code class="language-bash">mastacraf --version
+mastacraf --help</code></pre>
       </div>
     </section>
 
@@ -1034,7 +1034,7 @@ mastercraft --help</code></pre>
             <div class="step-title">Analyze before mastering — always</div>
             <div class="code-block-wrap">
               <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-              <pre><code class="language-bash">mastercraft analyze track.wav</code></pre>
+              <pre><code class="language-bash">mastacraf analyze track.wav</code></pre>
             </div>
             <p>This runs the full analysis suite and prints all measurements. No audio is written. Use this to understand the material before writing a preset.</p>
           </div>
@@ -1045,7 +1045,7 @@ mastercraft --help</code></pre>
             <div class="step-title">Master with the default preset</div>
             <div class="code-block-wrap">
               <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-              <pre><code class="language-bash">mastercraft master track.wav</code></pre>
+              <pre><code class="language-bash">mastacraf master track.wav</code></pre>
             </div>
             <p>Output goes to <code>./mastered/track/</code>. You get the mastered file, before/after images, and a JSON report.</p>
           </div>
@@ -1056,8 +1056,8 @@ mastercraft --help</code></pre>
             <div class="step-title">Use a named preset</div>
             <div class="code-block-wrap">
               <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-              <pre><code class="language-bash">mastercraft master track.wav --preset noise
-mastercraft master track.wav --preset film -o ./deliverables/</code></pre>
+              <pre><code class="language-bash">mastacraf master track.wav --preset noise
+mastacraf master track.wav --preset film -o ./deliverables/</code></pre>
             </div>
           </div>
         </div>
@@ -1067,7 +1067,7 @@ mastercraft master track.wav --preset film -o ./deliverables/</code></pre>
             <div class="step-title">Test a preset without writing anything</div>
             <div class="code-block-wrap">
               <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-              <pre><code class="language-bash">mastercraft master track.wav --preset mypreset --dry-run</code></pre>
+              <pre><code class="language-bash">mastacraf master track.wav --preset mypreset --dry-run</code></pre>
             </div>
           </div>
         </div>
@@ -1081,7 +1081,7 @@ mastercraft master track.wav --preset film -o ./deliverables/</code></pre>
 
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">usage</span></div>
-        <pre><code class="language-bash">mastercraft master &lt;INPUT&gt; [OPTIONS]</code></pre>
+        <pre><code class="language-bash">mastacraf master &lt;INPUT&gt; [OPTIONS]</code></pre>
       </div>
 
       <div class="table-wrap">
@@ -1103,19 +1103,19 @@ mastercraft master track.wav --preset film -o ./deliverables/</code></pre>
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">examples</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
         <pre><code class="language-bash"># Basic master, all defaults
-mastercraft master track.wav
+mastacraf master track.wav
 
 # Named preset, custom output directory
-mastercraft master track.wav -p film -o ./deliverables/
+mastacraf master track.wav -p film -o ./deliverables/
 
 # Override loudness without editing the preset
-mastercraft master track.wav --lufs -14
+mastacraf master track.wav --lufs -14
 
 # Verify what the pipeline would do without writing anything
-mastercraft master track.wav -p noise --dry-run -v
+mastacraf master track.wav -p noise --dry-run -v
 
 # Custom filename suffix
-mastercraft master track.wav --suffix _2024_v1
+mastacraf master track.wav --suffix _2024_v1
 # → mastered/track/track_2024_v1.wav</code></pre>
       </div>
     </section>
@@ -1127,7 +1127,7 @@ mastercraft master track.wav --suffix _2024_v1
 
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">usage</span></div>
-        <pre><code class="language-bash">mastercraft analyze &lt;INPUT&gt; [OPTIONS]</code></pre>
+        <pre><code class="language-bash">mastacraf analyze &lt;INPUT&gt; [OPTIONS]</code></pre>
       </div>
 
       <div class="table-wrap">
@@ -1168,23 +1168,23 @@ mastercraft master track.wav --suffix _2024_v1
       <h3>List all presets</h3>
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-        <pre><code class="language-bash">mastercraft presets</code></pre>
+        <pre><code class="language-bash">mastacraf presets</code></pre>
       </div>
       <p>Lists all presets found across all search directories. Prints name, LUFS target, true peak, LRA, and description.</p>
 
       <h3>Inspect a preset</h3>
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-        <pre><code class="language-bash">mastercraft preset noise
-mastercraft preset film > mybase.toml   # copy as starting point</code></pre>
+        <pre><code class="language-bash">mastacraf preset noise
+mastacraf preset film > mybase.toml   # copy as starting point</code></pre>
       </div>
 
       <h3>Preset search order</h3>
-      <p>When you pass <code>--preset name</code>, mastercraft searches for <code>name.toml</code> in this order, using the first match:</p>
+      <p>When you pass <code>--preset name</code>, mastacraf searches for <code>name.toml</code> in this order, using the first match:</p>
       <ol>
         <li><code>./presets/</code> relative to your current working directory <em>(use this)</em></li>
         <li><code>&lt;exe_dir&gt;/presets/</code> — next to the compiled binary (for bundled installs)</li>
-        <li><code>~/.config/mastercraft/presets/</code> (or platform equivalent)</li>
+        <li><code>~/.config/mastacraf/presets/</code> (or platform equivalent)</li>
       </ol>
     </section>
 
@@ -1197,7 +1197,7 @@ mastercraft preset film > mybase.toml   # copy as starting point</code></pre>
         <span class="callout-icon">◈</span>
         <div class="callout-body">
           <div class="callout-title">Always analyze before writing a preset</div>
-          The measured LRA, crest factor, and phase correlation from <code>mastercraft analyze</code> are the inputs to rational preset decisions. Guessing preset values without measurement produces arbitrary results.
+          The measured LRA, crest factor, and phase correlation from <code>mastacraf analyze</code> are the inputs to rational preset decisions. Guessing preset values without measurement produces arbitrary results.
         </div>
       </div>
 
@@ -1208,7 +1208,7 @@ mastercraft preset film > mybase.toml   # copy as starting point</code></pre>
             <div class="step-title">Analyze the material</div>
             <div class="code-block-wrap">
               <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-              <pre><code class="language-bash">mastercraft analyze track.wav</code></pre>
+              <pre><code class="language-bash">mastacraf analyze track.wav</code></pre>
             </div>
             <p>Note every value. Specifically: <strong>integrated loudness</strong> (how far loudnorm will push gain), <strong>loudness range</strong> (your floor for <code>target.lra</code>), <strong>crest factor</strong> (determines limiter attack setting), <strong>phase correlation</strong> (negative or very low means a mix problem, not a mastering problem), <strong>spectral balance</strong> (informs whether highpass matters).</p>
           </div>
@@ -1258,7 +1258,7 @@ mastercraft preset film > mybase.toml   # copy as starting point</code></pre>
             <div class="step-title">Test without writing</div>
             <div class="code-block-wrap">
               <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-              <pre><code class="language-bash">mastercraft master track.wav -p mypreset --dry-run</code></pre>
+              <pre><code class="language-bash">mastacraf master track.wav -p mypreset --dry-run</code></pre>
             </div>
           </div>
         </div>
@@ -1268,7 +1268,7 @@ mastercraft preset film > mybase.toml   # copy as starting point</code></pre>
             <div class="step-title">Run and check the report delta</div>
             <div class="code-block-wrap">
               <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-              <pre><code class="language-bash">mastercraft master track.wav -p mypreset
+              <pre><code class="language-bash">mastacraf master track.wav -p mypreset
 cat mastered/track/track_master_report.json</code></pre>
             </div>
             <p>Check the <code>delta</code> section. <code>lra_change</code> should be near zero or slightly positive. A large negative value (e.g. <code>-4</code>) means <code>target.lra</code> is set too low — loudnorm is compressing your dynamics. Raise it and re-run.</p>
@@ -1313,7 +1313,7 @@ cat mastered/track/track_master_report.json</code></pre>
           <span class="field-default">default: 11.0</span>
         </div>
         <div class="field-body">
-          Loudness range target in Loudness Units. <strong>This is the most important value to get right.</strong> The loudnorm filter attempts to fit the material's dynamic range into this target. If the material's natural LRA exceeds the target, loudnorm compresses dynamics to fit — silently, with no warning. Set at or above the value reported by <code>mastercraft analyze</code>.
+          Loudness range target in Loudness Units. <strong>This is the most important value to get right.</strong> The loudnorm filter attempts to fit the material's dynamic range into this target. If the material's natural LRA exceeds the target, loudnorm compresses dynamics to fit — silently, with no warning. Set at or above the value reported by <code>mastacraf analyze</code>.
           <div class="callout warn" style="margin-top:10px">
             <span class="callout-icon">⚠</span>
             <div class="callout-body">If measured LRA is 14 LU and you set <code>lra = 8</code>, loudnorm compresses 6 LU of your dynamic range away. Check <code>delta.lra_change</code> in the report after every master run.</div>
@@ -1604,7 +1604,7 @@ cat mastered/track/track_master_report.json</code></pre>
       <h2>Viewing the chain used <a href="#filter-chain" class="h-anchor">#</a></h2>
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-        <pre><code class="language-bash">mastercraft master track.wav -v              # prints during run
+        <pre><code class="language-bash">mastacraf master track.wav -v              # prints during run
 cat mastered/track/track_master_report.json  # stored in report</code></pre>
       </div>
 
@@ -1849,7 +1849,7 @@ volume=2dB</code></pre>
       <h1>AI integration</h1>
 
       <h2>matchering — reference-based mastering <a href="#ai" class="h-anchor">#</a></h2>
-      <p><a href="https://github.com/sergree/matchering" target="_blank">matchering</a> analyzes a reference track and applies its spectral and loudness character to your track. Run it as a pre-pass before mastercraft.</p>
+      <p><a href="https://github.com/sergree/matchering" target="_blank">matchering</a> analyzes a reference track and applies its spectral and loudness character to your track. Run it as a pre-pass before mastacraf.</p>
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
         <pre><code class="language-bash">pip install matchering
@@ -1863,9 +1863,9 @@ mg.process(
 )
 EOF
 
-mastercraft master track_matched.wav --preset default</code></pre>
+mastacraf master track_matched.wav --preset default</code></pre>
       </div>
-      <p>Pass <code>use_limiter=False</code> to matchering. mastercraft's limiter handles the peak ceiling.</p>
+      <p>Pass <code>use_limiter=False</code> to matchering. mastacraf's limiter handles the peak ceiling.</p>
 
       <h2>demucs — source separation <a href="#ai" class="h-anchor">#</a></h2>
       <p><a href="https://github.com/facebookresearch/demucs" target="_blank">demucs</a> separates stems. For mastering experimental music this is primarily useful for analysis — inspecting spectral and dynamic character of individual elements before mastering decisions.</p>
@@ -1874,20 +1874,20 @@ mastercraft master track_matched.wav --preset default</code></pre>
         <pre><code class="language-bash">pip install demucs
 python3 -m demucs --two-stems=vocals track.wav
 # examine separated/ directory
-mastercraft master track.wav --preset default</code></pre>
+mastacraf master track.wav --preset default</code></pre>
       </div>
     </section>
 
     <!-- TAURI -->
     <section class="doc-section" id="tauri">
       <h1>Bundling (Tauri)</h1>
-      <p>When you are ready to wrap mastercraft in a desktop UI via Tauri:</p>
+      <p>When you are ready to wrap mastacraf in a desktop UI via Tauri:</p>
 
-      <h3>1. mastercraft as a Tauri sidecar</h3>
+      <h3>1. mastacraf as a Tauri sidecar</h3>
       <div class="code-block-wrap">
         <div class="code-header"><span class="code-lang">json — tauri.conf.json</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
         <pre><code class="language-json">"bundle": {
-  "externalBin": ["../mastercraft/target/release/mastercraft"]
+  "externalBin": ["../mastacraf/target/release/mastacraf"]
 }</code></pre>
       </div>
 
@@ -1912,12 +1912,12 @@ mastercraft master track.wav --preset default</code></pre>
 
       <div class="field-block">
         <div class="field-header"><span class="field-name">ffmpeg not found</span></div>
-        <div class="field-body">FFmpeg is not in <code>$PATH</code> and not placed next to the mastercraft binary. Install it with your package manager, or copy the binary to the same directory as <code>mastercraft</code>.</div>
+        <div class="field-body">FFmpeg is not in <code>$PATH</code> and not placed next to the mastacraf binary. Install it with your package manager, or copy the binary to the same directory as <code>mastacraf</code>.</div>
       </div>
 
       <div class="field-block">
         <div class="field-header"><span class="field-name">Preset 'name' not found</span></div>
-        <div class="field-body"><code>presets/name.toml</code> does not exist in any search directory. Run <code>mastercraft presets</code> to see what is found. Confirm you are running from the directory containing <code>./presets/</code>.</div>
+        <div class="field-body"><code>presets/name.toml</code> does not exist in any search directory. Run <code>mastacraf presets</code> to see what is found. Confirm you are running from the directory containing <code>./presets/</code>.</div>
       </div>
 
       <div class="field-block">

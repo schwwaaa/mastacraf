@@ -149,9 +149,9 @@ pub fn preset_search_dirs() -> Vec<PathBuf> {
         }
     }
 
-    // 3. User config dir  (~/.config/mastercraft/presets on Linux/macOS)
+    // 3. User config dir  (~/.config/mastacraf/presets on Linux/macOS)
     if let Some(config_dir) = dirs::config_dir() {
-        dirs.push(config_dir.join("mastercraft").join("presets"));
+        dirs.push(config_dir.join("mastacraf").join("presets"));
     }
 
     dirs
@@ -178,7 +178,7 @@ pub fn load_preset(name: &str) -> Result<Preset> {
     bail!(
         "Preset '{name}' not found.\n\
          Searched: {}\n\
-         Run `mastercraft presets` to list available presets.",
+         Run `mastacraf presets` to list available presets.",
         preset_search_dirs()
             .iter()
             .map(|p| p.display().to_string())
