@@ -1,0 +1,46 @@
+[meta]
+name        = "film"
+description = "Film scoring / cinematic — EBU R128 broadcast standard, full dynamics"
+author      = ""
+notes       = """
+Cinema loudness standard: -23 LUFS integrated, -2 dBTP true peak.
+Maximum dynamic range target (LRA 20 LU) — silence vs. climax intact.
+No compression. Gentle HP only. 48kHz output for post-production pipeline.
+For deliverables going into a DAW or DCP, export to 32-bit float WAV.
+"""
+
+[target]
+lufs      = -23.0   # EBU R128 broadcast / cinema standard
+true_peak = -2.0    # Stricter ceiling for broadcast safety
+lra       = 20.0    # Maximum allowable — preserve every dynamic breath
+
+[filters]
+highpass_hz = 20.0
+lowpass_hz  = 0.0
+
+[compressor]
+enabled      = false
+threshold_db = -20.0
+ratio        = 1.5
+attack_ms    = 30.0
+release_ms   = 300.0
+makeup_db    = 0.0
+knee_db      = 3.0
+
+[limiter]
+enabled    = true
+attack_ms  = 10.0   # Slower — protect transients from being dulled
+release_ms = 100.0
+
+[output]
+format      = "wav"
+bit_depth   = 24
+sample_rate = 48000  # Post-production standard
+
+[visualization]
+enabled            = true
+spectrogram        = true
+waveform           = true
+width              = 1920
+spectrogram_height = 512
+waveform_height    = 200

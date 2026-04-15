@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-04-15T01:06:12.343632+00:00",
+  "input_file": "/Users/tgm/Desktop/_audiotests/freebase.wav",
+  "output_file": "mastered/freebase_master.wav",
+  "preset": {
+    "meta": {
+      "name": "default",
+      "description": "General purpose — experimental electronic / abstract",
+      "author": "",
+      "notes": "Gentle treatment: subsonic roll-off, peak limiting, EBU R128 normalize.\nCompressor disabled — trusts your mix dynamics.\nSuitable as a starting point for most material.\n"
+    },
+    "target": {
+      "lufs": -16.0,
+      "true_peak": -1.0,
+      "lra": 11.0
+    },
+    "filters": {
+      "highpass_hz": 20.0,
+      "lowpass_hz": 0.0
+    },
+    "compressor": {
+      "enabled": false,
+      "threshold_db": -18.0,
+      "ratio": 2.0,
+      "attack_ms": 20.0,
+      "release_ms": 250.0,
+      "makeup_db": 0.0,
+      "knee_db": 2.0
+    },
+    "limiter": {
+      "enabled": true,
+      "attack_ms": 5.0,
+      "release_ms": 50.0
+    },
+    "output": {
+      "format": "wav",
+      "bit_depth": 24,
+      "sample_rate": 44100
+    },
+    "visualization": {
+      "enabled": true,
+      "spectrogram": true,
+      "waveform": true,
+      "width": 1920,
+      "spectrogram_height": 512,
+      "waveform_height": 200
+    }
+  },
+  "pre_analysis": {
+    "integrated_lufs": -21.74,
+    "true_peak_dbtp": 0.25,
+    "loudness_range_lu": 4.7,
+    "threshold_lufs": -31.94,
+    "duration_secs": 130.32,
+    "sample_rate": 44100,
+    "channels": 2,
+    "bit_depth": 16,
+    "codec": "pcm_s16le ([1][0][0][0] / 0x0001)"
+  },
+  "post_analysis": {
+    "integrated_lufs": -16.12,
+    "true_peak_dbtp": -0.99,
+    "loudness_range_lu": 4.6,
+    "threshold_lufs": -26.3,
+    "duration_secs": 130.32,
+    "sample_rate": 44100,
+    "channels": 2,
+    "bit_depth": 24,
+    "codec": "pcm_s24le ([1][0][0][0] / 0x0001)"
+  },
+  "filter_chain": "highpass=f=20.0,alimiter=level_in=1:level_out=0.891251:limit=0.891251:attack=5.0:release=50.0:asc=1,loudnorm=I=-16.0:TP=-1.0:LRA=11.0:measured_I=-21.74:measured_LRA=4.70:measured_TP=0.25:measured_thresh=-31.94:offset=-0.71:linear=true:print_format=summary",
+  "delta": {
+    "lufs_change": 5.619999,
+    "true_peak_change": -1.24,
+    "lra_change": -0.099999905
+  }
+}

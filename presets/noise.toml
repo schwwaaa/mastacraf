@@ -1,0 +1,46 @@
+[meta]
+name        = "noise"
+description = "Harsh noise / power electronics / abstract — dynamics preserved, minimal processing"
+author      = ""
+notes       = """
+Noise music should not be compressed — the density and dynamic peaks ARE the music.
+Very low HP cut to preserve low-end weight. Wide LRA target.
+LUFS target lower than streaming norm to keep headroom for transients.
+Limiter is fast to contain hard clips without robbing attack.
+"""
+
+[target]
+lufs      = -20.0   # More headroom — this material doesn't need to be loud
+true_peak = -0.5    # Tight ceiling
+lra       = 18.0    # Preserve massive dynamic range
+
+[filters]
+highpass_hz = 12.0  # Very low — preserve sub rumble that IS the composition
+lowpass_hz  = 0.0
+
+[compressor]
+enabled      = false  # Never compress noise music
+threshold_db = -18.0
+ratio        = 2.0
+attack_ms    = 20.0
+release_ms   = 250.0
+makeup_db    = 0.0
+knee_db      = 2.0
+
+[limiter]
+enabled    = true
+attack_ms  = 0.5    # Fast — catches sharp transient clips
+release_ms = 80.0
+
+[output]
+format      = "wav"
+bit_depth   = 24
+sample_rate = 44100
+
+[visualization]
+enabled            = true
+spectrogram        = true
+waveform           = true
+width              = 1920
+spectrogram_height = 768   # Taller for examining dense spectral content
+waveform_height    = 300

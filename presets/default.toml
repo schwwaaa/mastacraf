@@ -1,0 +1,45 @@
+[meta]
+name        = "default"
+description = "General purpose — experimental electronic / abstract"
+author      = ""
+notes       = """
+Gentle treatment: subsonic roll-off, peak limiting, EBU R128 normalize.
+Compressor disabled — trusts your mix dynamics.
+Suitable as a starting point for most material.
+"""
+
+[target]
+lufs      = -16.0   # Balanced streaming target (-14 Spotify, -18 for wider dynamics)
+true_peak = -1.0    # dBTP ceiling
+lra       = 11.0    # Loudness range — allows moderate dynamics
+
+[filters]
+highpass_hz = 20.0  # Remove subsonic / DC offset
+lowpass_hz  = 0.0   # Disabled
+
+[compressor]
+enabled      = false
+threshold_db = -18.0
+ratio        = 2.0
+attack_ms    = 20.0
+release_ms   = 250.0
+makeup_db    = 0.0
+knee_db      = 2.0
+
+[limiter]
+enabled    = true
+attack_ms  = 5.0
+release_ms = 50.0
+
+[output]
+format      = "wav"   # wav | flac | mp3 | aac
+bit_depth   = 24
+sample_rate = 44100
+
+[visualization]
+enabled            = true
+spectrogram        = true
+waveform           = true
+width              = 1920
+spectrogram_height = 512
+waveform_height    = 200
