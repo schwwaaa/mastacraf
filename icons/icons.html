@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mastacraf — icon system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=IBM+Plex+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#09090c; --bg-1:#0f0f14; --bg-2:#141419; --bg-3:#1c1c24; --border:#22222e; --text:#c4c4d4; --dim:#72728a; --head:#eeeef8; --amber:#e8913a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:14px; padding:60px 48px 100px; max-width:1100px; margin:0 auto; }
+  header { display:flex; align-items:center; gap:16px; margin-bottom:56px; padding-bottom:32px; border-bottom:1px solid var(--border); }
+  .logo-mark { width:48px; height:48px; background:var(--amber); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .logo-text { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:var(--head); letter-spacing:-0.03em; }
+  .logo-sub { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--dim); letter-spacing:0.08em; margin-top:2px; }
+  h2 { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--amber); margin-bottom:20px; opacity:0.7; }
+  .section { margin-bottom:60px; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .card { border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--bg-1); transition:border-color 0.2s; }
+  .card:hover { border-color:#3a3a4e; }
+  .preview { padding:40px; display:flex; align-items:center; justify-content:center; min-height:200px; }
+  .preview svg { max-width:140px; max-height:140px; width:auto; height:auto; display:block; }
+  .on-dark { background:#09090c; }
+  .on-mid  { background:#1e1e2a; }
+  .on-light{ background:#f5f3ee; }
+  .checker { background-color:#1e1e2a; background-image:linear-gradient(45deg,#141420 25%,transparent 25%),linear-gradient(-45deg,#141420 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#141420 75%),linear-gradient(-45deg,transparent 75%,#141420 75%); background-size:16px 16px; background-position:0 0,0 8px,8px -8px,-8px 0; }
+  .foot { padding:14px 18px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  .fname { font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dl { background:var(--bg-3); border:1px solid var(--border); border-radius:6px; padding:5px 12px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--dim); cursor:pointer; text-decoration:none; white-space:nowrap; transition:all 0.15s; flex-shrink:0; }
+  .dl:hover { border-color:var(--amber); color:var(--amber); }
+  .banner-card { border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--bg-1); }
+  .banner-card svg { width:100%; height:auto; display:block; }
+  .wm-wrap { padding:36px; }
+  .wm-wrap svg { height:64px; width:auto; }
+  .fav-row { display:flex; align-items:flex-end; gap:32px; padding:32px; background:var(--bg-1); border:1px solid var(--border); border-radius:12px; flex-wrap:wrap; }
+  .fav-item { display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .fav-item span { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--dim); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+      <path d="M2 12 L5 6 L8 10 L11 4 L14 12" stroke="#09090c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div>
+    <div class="logo-text">mastacraf</div>
+    <div class="logo-sub">icon system</div>
+  </div>
+</header>
+
+<div class="section">
+  <h2>App icons — 512×512</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="preview on-mid">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <rect width="512" height="512" rx="96" fill="#e8913a"/>
+          <path d="M64 384 L160 192 L256 320 L352 128 L448 384" fill="none" stroke="#09090c" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="foot"><span class="fname">icon-primary.svg</span><a class="dl" href="mastacraf-icon-primary.svg" download>↓ svg</a></div>
+    </div>
+    <div class="card">
+      <div class="preview on-mid">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <rect width="512" height="512" rx="96" fill="#09090c"/>
+          <path d="M64 384 L160 192 L256 320 L352 128 L448 384" fill="none" stroke="#e8913a" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="foot"><span class="fname">icon-dark.svg</span><a class="dl" href="mastacraf-icon-dark.svg" download>↓ svg</a></div>
+    </div>
+    <div class="card">
+      <div class="preview on-mid">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <rect width="512" height="512" rx="96" fill="#f5f3ee"/>
+          <path d="M64 384 L160 192 L256 320 L352 128 L448 384" fill="none" stroke="#09090c" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="foot"><span class="fname">icon-light.svg</span><a class="dl" href="mastacraf-icon-light.svg" download>↓ svg</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Mark — transparent background</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="preview checker">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <path d="M64 384 L160 192 L256 320 L352 128 L448 384" fill="none" stroke="#e8913a" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="foot"><span class="fname">mark-amber.svg</span><a class="dl" href="mastacraf-mark-amber.svg" download>↓ svg</a></div>
+    </div>
+    <div class="card">
+      <div class="preview on-light">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <path d="M64 384 L160 192 L256 320 L352 128 L448 384" fill="none" stroke="#09090c" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="foot"><span class="fname">mark-black.svg</span><a class="dl" href="mastacraf-mark-black.svg" download>↓ svg</a></div>
+    </div>
+    <div class="card">
+      <div class="preview on-dark">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <path d="M64 384 L160 192 L256 320 L352 128 L448 384" fill="none" stroke="#ffffff" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="foot"><span class="fname">mark-white.svg</span><a class="dl" href="mastacraf-mark-white.svg" download>↓ svg</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Wordmark — 960×256</h2>
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    <div class="banner-card">
+      <div class="wm-wrap" style="background:#09090c;">
+        <svg viewBox="0 0 1000 256" xmlns="http://www.w3.org/2000/svg" style="height:64px;width:auto;">
+          <rect x="0" y="0" width="256" height="256" rx="48" fill="#e8913a"/>
+          <path d="M32 192 L80 96 L128 160 L176 64 L224 192" fill="none" stroke="#09090c" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="296" y="175" font-family="'Syne','Arial Black',system-ui,sans-serif" font-weight="800" font-size="128" letter-spacing="-4" fill="#f5f3ee">mastacraf</text>
+        </svg>
+      </div>
+      <div class="foot"><span class="fname">wordmark-light.svg — for dark backgrounds</span><a class="dl" href="mastacraf-wordmark-light.svg" download>↓ svg</a></div>
+    </div>
+    <div class="banner-card">
+      <div class="wm-wrap" style="background:#f5f3ee;">
+        <svg viewBox="0 0 1000 256" xmlns="http://www.w3.org/2000/svg" style="height:64px;width:auto;">
+          <rect x="0" y="0" width="256" height="256" rx="48" fill="#e8913a"/>
+          <path d="M32 192 L80 96 L128 160 L176 64 L224 192" fill="none" stroke="#09090c" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="296" y="175" font-family="'Syne','Arial Black',system-ui,sans-serif" font-weight="800" font-size="128" letter-spacing="-4" fill="#09090c">mastacraf</text>
+        </svg>
+      </div>
+      <div class="foot"><span class="fname">wordmark-dark.svg — for light backgrounds</span><a class="dl" href="mastacraf-wordmark-dark.svg" download>↓ svg</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Favicon — rendered at all sizes</h2>
+  <div class="fav-row">
+    <div class="fav-item">
+      <svg viewBox="0 0 32 32" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#e8913a"/><path d="M4 24 L10 12 L16 20 L22 8 L28 24" fill="none" stroke="#09090c" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>64px</span>
+    </div>
+    <div class="fav-item">
+      <svg viewBox="0 0 32 32" width="48" height="48" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#e8913a"/><path d="M4 24 L10 12 L16 20 L22 8 L28 24" fill="none" stroke="#09090c" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>48px</span>
+    </div>
+    <div class="fav-item">
+      <svg viewBox="0 0 32 32" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#e8913a"/><path d="M4 24 L10 12 L16 20 L22 8 L28 24" fill="none" stroke="#09090c" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>32px</span>
+    </div>
+    <div class="fav-item">
+      <svg viewBox="0 0 32 32" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#e8913a"/><path d="M4 24 L10 12 L16 20 L22 8 L28 24" fill="none" stroke="#09090c" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>24px</span>
+    </div>
+    <div class="fav-item">
+      <svg viewBox="0 0 32 32" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="6" fill="#e8913a"/><path d="M4 24 L10 12 L16 20 L22 8 L28 24" fill="none" stroke="#09090c" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>16px</span>
+    </div>
+    <div style="margin-left:auto;align-self:center;">
+      <a class="dl" href="mastacraf-favicon.svg" download style="display:inline-block">↓ favicon.svg</a>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Social / OG banner — 1200×630</h2>
+  <div class="banner-card">
+    <svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+      <rect width="1200" height="630" fill="#09090c"/>
+      <line x1="0" y1="315" x2="1200" y2="315" stroke="#fff" stroke-width="0.5" stroke-opacity="0.05"/>
+      <line x1="600" y1="0" x2="600" y2="630" stroke="#fff" stroke-width="0.5" stroke-opacity="0.05"/>
+      <line x1="0" y1="105" x2="1200" y2="105" stroke="#fff" stroke-width="0.5" stroke-opacity="0.03"/>
+      <line x1="0" y1="210" x2="1200" y2="210" stroke="#fff" stroke-width="0.5" stroke-opacity="0.03"/>
+      <line x1="0" y1="420" x2="1200" y2="420" stroke="#fff" stroke-width="0.5" stroke-opacity="0.03"/>
+      <line x1="0" y1="525" x2="1200" y2="525" stroke="#fff" stroke-width="0.5" stroke-opacity="0.03"/>
+      <line x1="200" y1="0" x2="200" y2="630" stroke="#fff" stroke-width="0.5" stroke-opacity="0.03"/>
+      <line x1="400" y1="0" x2="400" y2="630" stroke="#fff" stroke-width="0.5" stroke-opacity="0.03"/>
+      <line x1="800" y1="0" x2="800" y2="630" stroke="#fff" stroke-width="0.5" stroke-opacity="0.03"/>
+      <line x1="1000" y1="0" x2="1000" y2="630" stroke="#fff" stroke-width="0.5" stroke-opacity="0.03"/>
+      <rect x="80" y="195" width="180" height="180" rx="32" fill="#e8913a"/>
+      <path d="M102.5 330 L136.3 262.5 L170 307.5 L203.8 240 L237.5 330" fill="none" stroke="#09090c" stroke-width="15.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="300" y="323" font-family="'Syne','Arial Black',system-ui,sans-serif" font-weight="800" font-size="120" letter-spacing="-3" fill="#eeeef8">mastacraf</text>
+      <text x="302" y="382" font-family="system-ui,sans-serif" font-weight="400" font-size="27" fill="#72728a">audio mastering pipeline for experimental music</text>
+      <rect x="302" y="408" width="136" height="2" rx="1" fill="#e8913a" opacity="0.5"/>
+      <text x="1120" y="602" font-family="'Syne',system-ui,sans-serif" font-weight="700" font-size="17" letter-spacing="1" fill="#e8913a" text-anchor="end" opacity="0.5">v0.1.0</text>
+    </svg>
+    <div class="foot"><span class="fname">social-banner.svg — 1200×630</span><a class="dl" href="mastacraf-social-banner.svg" download>↓ svg</a></div>
+  </div>
+</div>
+
+</body>
+</html>
