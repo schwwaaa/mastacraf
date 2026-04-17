@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 256" width="960" height="256">
+  <rect x="0" y="0" width="256" height="256" rx="48" fill="#e8913a"/>
+  <path d="M32 192 L80 96 L128 160 L176 64 L224 192"
+    fill="none"
+    stroke="#09090c"
+    stroke-width="22"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+  <text
+    x="296" y="175"
+    font-family="'Syne','Arial Black',system-ui,sans-serif"
+    font-weight="800"
+    font-size="128"
+    letter-spacing="-4"
+    fill="#f5f3ee">mastacraf</text>
+</svg>
