@@ -1,0 +1,17 @@
+[meta]
+name        = "office"
+description = "Drone — wide dynamic range, sparse rhythm, slow movement"
+
+[target]
+lufs      = -18.0
+true_peak = -1.0
+lra       = 20.0
+
+[limiter]
+attack_ms  = 10.0
+release_ms = 120.0
+
+[output]
+format      = "wav"
+bit_depth   = 24
+sample_rate = 44100

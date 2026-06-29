@@ -1,0 +1,39 @@
+[meta]
+name        = "albumname"
+description = "Abstract electronic — dynamic, wide stereo, mid-dominant"
+
+[target]
+lufs      = -16.0   # already sitting at -16.38, minimal gain push
+true_peak = -1.0    # right channel hit 0dBFS — limiter will work here
+lra       = 14.0    # measured 13.0 LU — set above to preserve all dynamics
+
+[filters]
+highpass_hz = 20.0  # clean DC offset, transparent to all audible content
+lowpass_hz  = 0.0
+
+[compressor]
+enabled      = false
+threshold_db = -18.0
+ratio        = 2.0
+attack_ms    = 20.0
+release_ms   = 250.0
+makeup_db    = 0.0
+knee_db      = 2.0
+
+[limiter]
+enabled    = true
+attack_ms  = 7.0    # crest factor 19.54 = very transient — slow enough to preserve shape
+release_ms = 80.0   # slightly longer release for dense material around peaks
+
+[output]
+format      = "wav"
+bit_depth   = 32    # source is 32-bit float — preserve it
+sample_rate = 96000 # source is 96kHz — preserve for archive/album master
+
+[visualization]
+enabled            = true
+spectrogram        = true
+waveform           = true
+width              = 1920
+spectrogram_height = 512
+waveform_height    = 200

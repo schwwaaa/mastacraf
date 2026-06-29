@@ -1,0 +1,17 @@
+[meta]
+name        = "peakxv"
+description = "Abstract electronic — dynamic, wide stereo, mid-dominant"
+
+[target]
+lufs      = -16.0
+true_peak = -1.0
+lra       = 14.0
+
+[limiter]
+attack_ms  = 7.0
+release_ms = 80.0
+
+[output]
+format      = "wav"
+bit_depth   = 24
+sample_rate = 96000

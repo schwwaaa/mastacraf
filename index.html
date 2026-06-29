@@ -883,6 +883,7 @@
 
     <div class="nav-section">
       <div class="nav-group-label">Pipeline</div>
+      <a href="#pipeline-overview" class="nav-link">Pipeline overview</a>
       <a href="#filter-chain"     class="nav-link">Filter chain</a>
       <a href="#output-structure" class="nav-link">Output structure</a>
       <a href="#visualizations"   class="nav-link">Visualizations</a>
@@ -1576,6 +1577,37 @@ cat mastered/track/track_master_report.json</code></pre>
       </div>
     </section>
 
+    <!-- PIPELINE OVERVIEW -->
+    <section class="doc-section" id="pipeline-overview">
+      <h1>Pipeline overview</h1>
+      <p>mastacraf processes audio through a fixed sequence of stages. Each stage is configured via the preset file — the pipeline itself does not change, only the parameters applied at each stage.</p>
+      <p>Audio enters as a 24-bit / 96kHz WAV. The preset is loaded and its parameters applied in order: analysis to measure the source, gain staging to correct integrated loudness, limiting to control peaks, then export. The result is a mastered WAV at the same specification alongside a full JSON report and visualization images.</p>
+
+      <div style="margin: 36px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg-1);">
+        <div style="padding: 12px 18px; background: var(--bg-2); border-bottom: 1px solid var(--border);">
+          <span style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); opacity: 0.7;">mastacraf — mastering pipeline</span>
+        </div>
+        <div style="padding: 24px;">
+          <img src="assets/mastacraf_pipeline.jpg" alt="Mastacraf mastering pipeline diagram — six stages: audio input, preset loader, analysis, gain staging, limiter, export" style="width: 100%; height: auto; display: block; border-radius: 6px;">
+        </div>
+      </div>
+
+      <h2>Stage summary <a href="#pipeline-overview" class="h-anchor">#</a></h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Stage</th><th>What happens</th><th>Configured by</th></tr></thead>
+          <tbody>
+            <tr><td>1 — Audio input</td><td>WAV file is read. Format is validated (24-bit, 96kHz stereo expected).</td><td>—</td></tr>
+            <tr><td>2 — Preset loader</td><td>The <code>.toml</code> preset file is parsed and all parameters are loaded into the pipeline context.</td><td><code>[meta]</code>, all sections</td></tr>
+            <tr><td>3 — Analysis</td><td>Pre-master measurements are taken: integrated LUFS, LRA, true peak, RMS, crest factor, phase correlation, spectral balance.</td><td><code>[target]</code></td></tr>
+            <tr><td>4 — Gain staging</td><td>Gain delta is calculated to bring integrated loudness to <code>target.lufs</code>. Two-pass EBU R128 loudnorm is applied.</td><td><code>[target].lufs</code>, <code>[target].lra</code></td></tr>
+            <tr><td>5 — Limiter</td><td>Peak limiter applied with configured attack and release. Ceiling set from <code>target.true_peak</code>.</td><td><code>[limiter]</code></td></tr>
+            <tr><td>6 — Export</td><td>Output WAV is written. Report JSON and visualization images are generated.</td><td><code>[output]</code>, <code>[visualization]</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <!-- FILTER CHAIN -->
     <section class="doc-section" id="filter-chain">
       <h1>The filter chain</h1>
@@ -2029,6 +2061,7 @@ const searchIndex = [
   { title: 'Phase correlation',      id: 'analysis-extended', section: 'Analysis' },
   { title: 'Spectral balance',       id: 'analysis-extended', section: 'Analysis' },
   { title: 'DC offset',              id: 'analysis-extended', section: 'Analysis' },
+  { title: 'Pipeline overview',      id: 'pipeline-overview', section: 'Pipeline' },
   { title: 'Filter chain',           id: 'filter-chain',      section: 'Pipeline' },
   { title: 'Output folder structure',id: 'output-structure',  section: 'Pipeline' },
   { title: 'Visualization output',   id: 'visualizations',    section: 'Pipeline' },
